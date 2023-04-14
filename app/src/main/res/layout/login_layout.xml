@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/logingradientcolorbg"
+    android:layout_height="match_parent"
+    tools:context=".login_Activity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/linearbg"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Sign In"
+            android:textColor="@color/headingcolor"
+            android:textSize="24sp"
+            app:fontFamily="@font/oswald" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emaillayoutlg"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Email/Phone"
+            android:textColorHint="@color/hinttextcolor"
+            app:boxStrokeColor="@color/basecolor"
+            app:boxStrokeErrorColor="#EA0606"
+            app:hintTextColor="@color/basecolor"
+
+            app:startIconDrawable="@drawable/email_icon"
+            app:startIconTint="@color/button_icon_color"
+            tools:ignore="MissingConstraints">
+
+            <!--this is the actual edit text which takes the input-->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailidlg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordlayoutlg"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Password"
+            android:textColorHint="@color/hinttextcolor"
+            app:boxStrokeColor="@color/basecolor"
+            app:boxStrokeErrorColor="#EA0606"
+            app:counterTextColor="@color/hinttextcolor"
+            app:hintTextColor="@color/basecolor"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/basecolor"
+            app:startIconDrawable="@drawable/password_icon"
+            app:startIconTint="@color/button_icon_color"
+            tools:ignore="MissingConstraints">
+
+            <!--this is the actual edit text which takes the input-->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordlg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:inputType="textPassword"
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/forgetpasswordlg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:text="Forget Password"
+            android:textColor="@color/headingcolor"
+            android:textSize="20sp"
+            app:fontFamily="@font/oswald" />
+
+        <Button
+            android:id="@+id/loginbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/buttonbg"
+            android:backgroundTint="@color/button_icon_color"
+            android:fontFamily="@font/oswald"
+            android:text="sign in"
+            android:textSize="20sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/registraionlink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:text="Register Now"
+            android:textColor="@color/headingcolor"
+            android:textSize="20sp"
+            app:fontFamily="@font/oswald" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

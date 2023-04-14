@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/logingradientcolorbg"
+    tools:context=".Signup_Actvity">
+
+
+    <ScrollView
+        android:id="@+id/scrollView4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/linearbg"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Sign Up"
+                    android:textColor="@color/headingcolor"
+                    android:textSize="24sp"
+                    app:fontFamily="@font/oswald" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/yournamelayout"
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Your Name"
+
+                    android:textColorHint="@color/hinttextcolor"
+                    app:boxStrokeColor="@color/basecolor"
+                    app:boxStrokeErrorColor="#EA0606"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/basecolor"
+                    app:hintTextColor="@color/basecolor"
+                    app:startIconDrawable="@drawable/user_icon"
+                    app:startIconTint="@color/button_icon_color">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/textcolor"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emaillayoutsp"
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Email"
+                    android:textColorHint="@color/hinttextcolor"
+                    app:boxStrokeColor="@color/basecolor"
+                    app:boxStrokeErrorColor="#EA0606"
+                    app:hintTextColor="@color/basecolor"
+                    app:startIconDrawable="@drawable/email_icon"
+                    app:startIconTint="@color/button_icon_color">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+
+                        android:inputType="textEmailAddress"
+
+                        android:textColor="@color/textcolor"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/mobilenumberlayout"
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Mobile Number"
+                    android:textColorHint="@color/hinttextcolor"
+                    app:boxStrokeColor="@color/basecolor"
+                    app:boxStrokeErrorColor="#EA0606"
+
+                    app:hintTextColor="@color/basecolor"
+                    app:startIconDrawable="@drawable/mobilenumber_icon"
+                    app:startIconTint="@color/button_icon_color">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/mobilenumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+
+                        android:inputType="phone"
+
+                        android:textColor="@color/textcolor"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passlayoutsp"
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Password"
+                    android:textColorHint="@color/hinttextcolor"
+                    app:boxStrokeColor="@color/basecolor"
+                    app:boxStrokeErrorColor="#EA0606"
+                    app:counterTextColor="@color/hinttextcolor"
+                    app:helperTextTextColor="#FF0000"
+                    app:hintTextColor="@color/basecolor"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/basecolor"
+                    app:startIconDrawable="@drawable/password_icon"
+                    app:startIconTint="@color/button_icon_color">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:inputType="textPassword"
+
+                        android:textColor="@color/textcolor"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/loginlink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Already Have an Account"
+                    android:textColor="@color/headingcolor"
+                    android:textSize="20sp"
+                    app:fontFamily="@font/oswald" />
+
+                <Button
+                    android:id="@+id/verifybutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/buttonbg"
+                    android:text="Sign UP" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/continuemobilenumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="Continue With Phone Number"
+                    android:textColor="@color/headingcolor"
+                    android:textSize="20sp"
+                    app:fontFamily="@font/oswald" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
