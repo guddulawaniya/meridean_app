@@ -183,10 +183,10 @@ public class Signup_Actvity extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(s);
                     int status = obj.getInt("status");
-                    if (status==1)
+                    if (status==0)
                     {
                         Toast.makeText(Signup_Actvity.this, "User Successfully Created", Toast.LENGTH_SHORT).show();
-
+                        startActivity(new Intent(Signup_Actvity.this, verify_OTP_Activity.class));
 
                     }
                     else

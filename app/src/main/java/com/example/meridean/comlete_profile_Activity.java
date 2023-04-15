@@ -90,4 +90,9 @@ public class comlete_profile_Activity extends AppCompatActivity {
         datePickerDialog.show();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
