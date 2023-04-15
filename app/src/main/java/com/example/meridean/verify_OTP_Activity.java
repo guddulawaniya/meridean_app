@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class verify_OTP_Activity extends AppCompatActivity {
 
     EditText num1,num2,num3,num4;
@@ -25,6 +26,8 @@ public class verify_OTP_Activity extends AppCompatActivity {
         num3 = findViewById(R.id.num3);
         num4 = findViewById(R.id.num4);
         Button verifybutton = findViewById(R.id.verifybuttonotp);
+
+
 
 
         verifybutton.setOnClickListener(new View.OnClickListener() {
@@ -42,95 +45,113 @@ public class verify_OTP_Activity extends AppCompatActivity {
                 }
             }
         });
+        moveotpnumber();
 
-        movetextenterotp();
 
     }
-
-
-    void movetextenterotp()
+    private  void moveotpnumber()
     {
         num1.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
 
             }
 
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-
-                num2.requestFocus();
+                if(!s.toString().trim().isEmpty())
+                {
+                    num2.requestFocus();
+                }
 
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
 
             }
         });
 
         num2.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                if (!s.toString().trim().isEmpty())
+                {
+                    num1.requestFocus();
+                }
 
             }
 
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(!s.toString().trim().isEmpty())
+                {
+                    num3.requestFocus();
+                }
+                else if(num2.getText().toString().isEmpty())
+                {
+                    num1.requestFocus();
+                }
 
-                num3.requestFocus();
 
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                num1.requestFocus();
 
 
             }
         });
         num3.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-
-                num4.requestFocus();
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                if (s.toString().isEmpty())
                 num2.requestFocus();
 
 
             }
-        });
-        num4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
 
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().trim().isEmpty())
+                {
+                    num2.requestFocus();
+                    Toast.makeText(verify_OTP_Activity.this, "focus num2 ", Toast.LENGTH_SHORT).show();
+                }
 
-                num4.requestFocus();
 
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                num3.requestFocus();
-
+                if (!num3.getText().toString().isEmpty())
+                {
+                    num4.requestFocus();
+                    Toast.makeText(verify_OTP_Activity.this, "focus num4 ", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
 
+        num4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+
+                if (!s.toString().trim().isEmpty())
+                {
+                    num3.requestFocus();
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 }
