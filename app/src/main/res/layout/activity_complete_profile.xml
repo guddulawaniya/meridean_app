@@ -54,27 +54,7 @@
                     app:hintTextColor="@color/basecolor">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="@color/textcolor"
-                        android:textSize="16sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="Email "
-                    android:textColorHint="#9F9E9E"
-                    app:boxStrokeColor="@color/basecolor"
-                    app:boxStrokeErrorColor="#EA0000"
-                    app:hintAnimationEnabled="true"
-                    app:hintTextColor="@color/basecolor">
-
-                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
@@ -114,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Contact no "
+                    android:hint="Pin Code"
                     android:textColorHint="#9F9E9E"
                     app:boxStrokeColor="@color/basecolor"
                     app:boxStrokeErrorColor="#EA0000"
@@ -123,6 +103,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/areapincode"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
                         android:textColor="@color/textcolor"
@@ -143,6 +124,7 @@
                     app:hintTextColor="@color/basecolor">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
@@ -164,6 +146,7 @@
                     app:hintTextColor="@color/basecolor">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/city"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
@@ -185,6 +168,7 @@
                     app:hintTextColor="@color/basecolor">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/state"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"

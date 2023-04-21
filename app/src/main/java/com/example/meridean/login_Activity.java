@@ -2,6 +2,7 @@ package com.example.meridean;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -33,6 +34,12 @@ public class login_Activity extends AppCompatActivity {
 
     String url = "https://demo.merideanoverseas.in/login.php";
     AlertDialog.Builder builder;
+    SharedPreferences sharedPreferences;
+    private static final String SHARE_PREFS = "share_prefs";
+    private static final String EMAIL_KEY = "email_key";
+    private static  final String PASSWORD_KEY = "password_key";
+
+    private String email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,10 @@ public class login_Activity extends AppCompatActivity {
 
         builder = new AlertDialog.Builder(this);
         builder.setTitle("Login details");
+        sharedPreferences = getSharedPreferences(SHARE_PREFS,Context.MODE_PRIVATE);
+
+         email = sharedPreferences.getString("EMAIL_KEY",null);
+        password = sharedPreferences.getString("PASSWORD_KEY",null);
 
 
 
@@ -64,6 +75,11 @@ public class login_Activity extends AppCompatActivity {
                     if ( !(passtext.isEmpty()) && (passtext.length() <= 16)) {
 
                         if (isConnected()) {
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(EMAIL_KEY,emailtext);
+                            editor.putString(PASSWORD_KEY,passtext);
+                            editor.commit();
 
 
                             logincode(emailtext, passtext);
@@ -118,16 +134,29 @@ public class login_Activity extends AppCompatActivity {
         });
 
     }
-    void checkvalidation(TextInputEditText text,TextInputLayout emaillayout,String helpertext,int id)
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+
+        Toast.makeText(this, "result   "+EMAIL_KEY+"  "+PASSWORD_KEY, Toast.LENGTH_LONG).show();
+        if (email!=null && password!=null)
+        {
+            startActivity(new Intent(login_Activity.this, MainActivity.class));
+        }
+    }
+
+    void checkvalidation(TextInputEditText text, TextInputLayout emaillayout, String helpertext, int id)
     {
         switch (id)
         {
-            case 1:  emaillayout.setHelperText(helpertext);
-                emaillayout.setCounterEnabled(true);
-                emaillayout.setCounterMaxLength(16);
-                break;
-            case 2:emaillayout.setHelperText(helpertext);
-                break;
+            case 1: emaillayout.setHelperText(helpertext);
+                    emaillayout.setCounterEnabled(true);
+                    emaillayout.setCounterMaxLength(16);
+                    break;
+            case 2: emaillayout.setHelperText(helpertext);
+                    break;
 
         }
 
@@ -152,21 +181,28 @@ public class login_Activity extends AppCompatActivity {
     }
 
 
-    void logincode(String email,String password)
+    void logincode(String emailtext,String passwordtext)
 
     {
-        String addurl = url+"?email="+email+"&password="+password;
+        String addurl = url+"?email="+emailtext+"&password="+passwordtext;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, addurl, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                String name = null;
 
                 try {
                     JSONObject obj = new JSONObject(response);
-                    name = obj.getString("status");
+                    String status = obj.getString("status");
 
+                    if (status.equals("True"))
+                    {
 
+                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
+                        finish();
+                    }
+                    else Toast.makeText(login_Activity.this, "false", Toast.LENGTH_SHORT).show();
 
 
                 }
@@ -174,12 +210,6 @@ public class login_Activity extends AppCompatActivity {
                 {
                     Toast.makeText(login_Activity.this, "Error"+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-
-                intent.putExtra("data",name);
-                startActivity(intent);
-                overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
-                finish();
 
             }
         }, new com.android.volley.Response.ErrorListener() {

@@ -58,6 +58,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/updatename"
                         android:fontFamily="@font/poppins"
                         android:textColor="@color/textcolor"
                         android:textSize="16sp" />
@@ -69,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+
                     android:hint="Email "
                     android:textColorHint="#9F9E9E"
                     app:boxStrokeColor="@color/basecolor"
@@ -80,6 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
+                        android:id="@+id/updateemail"
                         android:fontFamily="@font/poppins"
                         android:textColor="@color/textcolor"
                         android:textSize="16sp" />
@@ -128,7 +131,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
+                        android:id="@+id/updatecontactnumber"
                         android:inputType="phone"
+                        android:textColor="@color/textcolor"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Pin Code"
+                    android:textColorHint="#9F9E9E"
+                    app:boxStrokeColor="@color/basecolor"
+                    app:boxStrokeErrorColor="#EA0000"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextColor="@color/basecolor">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:inputType="number"
+                        android:id="@+id/updatepincode"
                         android:textColor="@color/textcolor"
                         android:textSize="16sp" />
 
@@ -150,6 +176,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
+                        android:id="@+id/updateaddress"
                         android:textColor="@color/textcolor"
                         android:inputType="textPostalAddress"
                         android:textSize="16sp" />
@@ -172,6 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
+                        android:id="@+id/updatecity"
                         android:inputType="text"
                         android:textColor="@color/textcolor"
                         android:textSize="16sp" />
@@ -184,6 +212,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="State"
+
                     android:textColorHint="#9F9E9E"
                     app:boxStrokeColor="@color/basecolor"
                     app:boxStrokeErrorColor="#EA0000"
@@ -193,6 +222,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/updatestate"
                         android:fontFamily="@font/poppins"
                         android:textColor="@color/textcolor"
                         android:inputType="text"

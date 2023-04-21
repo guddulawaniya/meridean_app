@@ -3,6 +3,7 @@ package com.example.meridean;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,14 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.meridean.databinding.FragmentEditProfileBinding;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -22,6 +31,7 @@ public class Edit_profile_Fragment extends DialogFragment {
 
     FragmentEditProfileBinding binding;
 
+    String url = "#####";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,6 +89,67 @@ public class Edit_profile_Fragment extends DialogFragment {
 
         return binding.getRoot();
     }
+
+//    void uploaddataonserver()
+//    {
+//        String nametext = binding.updatename.getText().toString().trim();
+//        String dobtext = binding.updatedob.getText().toString().trim();
+//        String pincodetext = binding.updatepincode.getText().toString().trim();
+//        String addresstext = binding.updateaddress.getText().toString().trim();
+//        String citytext = binding.updatecity.getText().toString().trim();
+//        String statetext = binding.updatestate.getText().toString().trim();
+//        String countrytext = binding.selectcountryupdate.getText().toString().trim();
+//
+//        String customurl = url+"?name="+nametext+"&dobtext="+dobtext+"&pincode="+pincodetext+"&address="+addresstext+"&citytext="+citytext+"&state="+statetext+"&country="+countrytext;
+//
+//        class uploaddata extends AsyncTask<String,String,String> {
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String s) {
+//                try {
+//
+//                    JSONObject obj = new JSONObject();
+//                    JSONArray users = obj.getJSONArray("status");
+//                    String namel = users.getString("name");
+//                    String dob = users.getString("dob");
+//                    String pincode = users.getString("pincode");
+//                    String address = users.getString("address");
+//                    String city = users.getString("city");
+//                    String state = users.getString("state");
+//                    String country = users.getString("country");
+//                    if (status==0)
+//                    {
+//                        Toast.makeText(getContext(), "data successfully uploaded in server", Toast.LENGTH_SHORT).show();
+//                    }
+//                    else
+//                        Toast.makeText(getActivity(), "data not insert in server same technical issue", Toast.LENGTH_SHORT).show();
+//
+//                } catch (JSONException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                super.onPostExecute(s);
+//            }
+//
+//            @Override
+//            protected String doInBackground(String... strings) {
+//                try {
+//                    URL url = new URL(strings[0]);
+//                    HttpURLConnection conn =(HttpURLConnection) url.openConnection();
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//                    return br.readLine();
+//                } catch (Exception e) {
+//                    return e.getMessage();
+//                }
+//
+//            }
+//        }
+//        uploaddata up = new uploaddata();
+//        up.execute(customurl);
+//    }
 
     @Override
     public void onStart()
