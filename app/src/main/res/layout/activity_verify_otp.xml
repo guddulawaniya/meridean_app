@@ -7,88 +7,39 @@
     android:background="@color/white"
     tools:context=".verify_OTP_Activity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+    <com.chaos.view.PinView
+        android:id="@+id/pinview"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:cursorVisible="true"
+        android:textSize="25dp"
+        app:lineColor="@color/otplinecolor"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cursorColor="@color/basecolor"
+        android:inputType="number"
+        android:itemBackground="@color/white"
+        app:hideLineWhenFilled="false"
+        app:itemCount="4"
+        app:itemHeight="50dp"
+        app:itemRadius="10dp"
+        app:itemWidth="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        app:layout_constraintVertical_bias="0.022">
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
 
-        <EditText
-            android:id="@+id/num1"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/otptextbg"
-            android:cursorVisible="false"
-            android:gravity="center"
-            android:hint="-"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textColor="@color/textcolor"
-            android:textColorHint="@color/hinttextcolor"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/num2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/otptextbg"
-            android:cursorVisible="false"
-            android:gravity="center"
-            android:hint="-"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textColor="@color/textcolor"
-            android:textColorHint="@color/hinttextcolor"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/num3"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/otptextbg"
-            android:cursorVisible="false"
-            android:gravity="center"
-            android:hint="-"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textColor="@color/textcolor"
-            android:textColorHint="@color/hinttextcolor"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/num4"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/otptextbg"
-            android:cursorVisible="false"
-            android:gravity="center"
-            android:hint="-"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textColor="@color/textcolor"
-            android:textColorHint="@color/hinttextcolor"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+    </com.chaos.view.PinView>
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="236dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
         android:gravity="center"
         android:text="Please Enter the OTP send your register mobile number"
         android:textColor="@color/textcolor"
@@ -122,15 +73,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_symbol_colour" />
 
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/pinview">
 
         <TextView
             android:layout_width="wrap_content"
@@ -148,7 +102,6 @@
             android:text="Resend"
             android:textColor="@color/basecolor" />
     </LinearLayout>
-
 
     <Button
         android:id="@+id/verifybuttonotp"

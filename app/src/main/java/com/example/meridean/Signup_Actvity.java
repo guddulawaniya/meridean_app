@@ -186,7 +186,9 @@ public class Signup_Actvity extends AppCompatActivity {
                     if (status==0)
                     {
                         Toast.makeText(Signup_Actvity.this, "User Successfully Created", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Signup_Actvity.this, verify_OTP_Activity.class));
+                        Intent intent = new Intent(Signup_Actvity.this,verify_OTP_Activity.class);
+                        intent.putExtra("number",mobile);
+                        startActivity(intent);
 
                     }
                     else
