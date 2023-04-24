@@ -76,10 +76,7 @@ public class login_Activity extends AppCompatActivity {
 
                         if (isConnected()) {
 
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(EMAIL_KEY,emailtext);
-                            editor.putString(PASSWORD_KEY,passtext);
-                            editor.commit();
+
 
 
                             logincode(emailtext, passtext);
@@ -196,6 +193,10 @@ public class login_Activity extends AppCompatActivity {
 
                     if (status.equals("True"))
                     {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(EMAIL_KEY,emailtext);
+                        editor.putString(PASSWORD_KEY,passwordtext);
+                        editor.commit();
 
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);

@@ -36,6 +36,7 @@ public class userProfile_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(userProfile_Activity.this,Payment_Activity.class));
+                overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
             }
         });
 
@@ -43,6 +44,7 @@ public class userProfile_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(userProfile_Activity.this,Notification_Activity.class));
+                overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
 
             }
         });
@@ -50,6 +52,8 @@ public class userProfile_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(userProfile_Activity.this,Setting_Activity.class));
+                overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
+                finish();
             }
         });
 
