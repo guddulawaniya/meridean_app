@@ -35,11 +35,11 @@ public class login_Activity extends AppCompatActivity {
     String url = "https://demo.merideanoverseas.in/login.php";
     AlertDialog.Builder builder;
     SharedPreferences sharedPreferences;
-    private static final String SHARE_PREFS = "share_prefs";
-    private static final String EMAIL_KEY = "email_key";
-    private static  final String PASSWORD_KEY = "password_key";
+     static final String SHARE_PREFS = "share_prefs";
+     static final String EMAIL_KEY = "email_key";
+     static  final String PASSWORD_KEY = "password_key";
 
-    private String email,password;
+     String email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +77,8 @@ public class login_Activity extends AppCompatActivity {
                         if (isConnected()) {
 
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(EMAIL_KEY,emailtext);
-                            editor.putString(PASSWORD_KEY,passtext);
+                            editor.putString(EMAIL_KEY,"emailtext");
+                            editor.putString(PASSWORD_KEY,"passtext");
                             editor.commit();
 
 
