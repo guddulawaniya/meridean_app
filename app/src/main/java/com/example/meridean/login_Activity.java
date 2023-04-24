@@ -59,8 +59,8 @@ public class login_Activity extends AppCompatActivity {
         builder.setTitle("Login details");
         sharedPreferences = getSharedPreferences(SHARE_PREFS,Context.MODE_PRIVATE);
 
-         email = sharedPreferences.getString("EMAIL_KEY",null);
-        password = sharedPreferences.getString("PASSWORD_KEY",null);
+         email = sharedPreferences.getString(EMAIL_KEY,null);
+        password = sharedPreferences.getString(PASSWORD_KEY,null);
 
 
 
@@ -77,8 +77,8 @@ public class login_Activity extends AppCompatActivity {
                         if (isConnected()) {
 
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(EMAIL_KEY,"emailtext");
-                            editor.putString(PASSWORD_KEY,"passtext");
+                            editor.putString(EMAIL_KEY,emailtext);
+                            editor.putString(PASSWORD_KEY,passtext);
                             editor.commit();
 
 
@@ -138,13 +138,13 @@ public class login_Activity extends AppCompatActivity {
     @Override
     protected void onStart() {
 
-        super.onStart();
-
-        Toast.makeText(this, "result   "+EMAIL_KEY+"  "+PASSWORD_KEY, Toast.LENGTH_LONG).show();
         if (email!=null && password!=null)
         {
             startActivity(new Intent(login_Activity.this, MainActivity.class));
+            Toast.makeText(this, "Welcome Back "+email, Toast.LENGTH_LONG).show();
+            finish();
         }
+        super.onStart();
     }
 
     void checkvalidation(TextInputEditText text, TextInputLayout emaillayout, String helpertext, int id)
