@@ -14,6 +14,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -35,6 +36,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Random;
 
 public class Signup_Actvity extends AppCompatActivity {
@@ -193,11 +195,11 @@ public class Signup_Actvity extends AppCompatActivity {
                     int status = obj.getInt("status");
                     if (status==0)
                     {
-                        String otp= new DecimalFormat("0000").format(new Random().nextInt(9999));
+
 
                         Intent intent = new Intent(Signup_Actvity.this,verify_OTP_Activity.class);
                         intent.putExtra("number",mobile);
-                        intent.putExtra("otp",otp);
+
                         startActivity(intent);
                         finish();
 
@@ -233,6 +235,7 @@ public class Signup_Actvity extends AppCompatActivity {
         obj.execute(addurlsignup);
 
     }
+
 
 
 
