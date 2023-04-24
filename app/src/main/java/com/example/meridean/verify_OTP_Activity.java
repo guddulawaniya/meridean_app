@@ -4,17 +4,11 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +21,6 @@ import com.chaos.view.PinView;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class verify_OTP_Activity extends AppCompatActivity {
@@ -38,8 +30,9 @@ public class verify_OTP_Activity extends AppCompatActivity {
     private Notification notification;
 
     TextView resendotp;
+
     String sendotp;
-    Timer mytimer;
+    boolean rdcheck = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,26 +43,25 @@ public class verify_OTP_Activity extends AppCompatActivity {
         TextView showmessage = findViewById(R.id.textView11);
         Intent intent = getIntent();
         String number = intent.getStringExtra("number");
+        sendotp = intent.getStringExtra("otp");
         resendotp = findViewById(R.id.resendotp);
-        sendotp= new DecimalFormat("0000").format(new Random().nextInt(9999));
 
-        mytimer = new Timer();
-
-
-        mytimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                timermethod();
-
-            }
-        },0,30000);
 
         timecounter(sendotp);
+
         resendotp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timecounter(sendotp);
+
+
+                sendotp= new DecimalFormat("0000").format(new Random().nextInt(9999));
+                if (rdcheck)
+                {
+                    rdcheck = false;
+                    timecounter(sendotp);
+                }
+
+
 
             }
         });
@@ -85,7 +77,7 @@ public class verify_OTP_Activity extends AppCompatActivity {
 
                 if (sendotp.equals(myotp))
                 {
-                    mytimer.cancel();
+
 
                     Toast.makeText(verify_OTP_Activity.this, "Verified", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(verify_OTP_Activity.this, userProfile_Activity.class));
@@ -105,25 +97,12 @@ public class verify_OTP_Activity extends AppCompatActivity {
 
     }
 
-    private void timermethod()
-    {
-        this.runOnUiThread(time_click);
-    }
-
-    private Runnable time_click = new Runnable() {
-
-        @Override
-        public void run() {
-            sendotp= new DecimalFormat("0000").format(new Random().nextInt(9999));
-        }
-
-
-    };
-
 
     void timecounter(String sendotp)
     {
 
+
+        generatenotification(sendotp);
         new CountDownTimer(30000,1000)
         {
 
@@ -135,13 +114,15 @@ public class verify_OTP_Activity extends AppCompatActivity {
                 long sec = (l/1000) % 60;
                 resendotp.setText("00 : "+format.format(sec));
 
-                generatenotification(sendotp);
+
 
             }
 
             @Override
             public void onFinish() {
                 resendotp.setText("Resend");
+                rdcheck = true;
+
 
             }
         }.start();

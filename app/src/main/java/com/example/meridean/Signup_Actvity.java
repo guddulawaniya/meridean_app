@@ -3,18 +3,15 @@ package com.example.meridean;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -24,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -36,7 +34,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Random;
 
 public class Signup_Actvity extends AppCompatActivity {
@@ -45,6 +42,8 @@ public class Signup_Actvity extends AppCompatActivity {
     TextInputEditText username;
     TextInputEditText password;
     TextInputEditText mobilenumber;
+    private NotificationManagerCompat notificationManagerCompat;
+    private Notification notification;
 
 
     String url = "https://demo.merideanoverseas.in/registration.php";
@@ -195,10 +194,13 @@ public class Signup_Actvity extends AppCompatActivity {
                     int status = obj.getInt("status");
                     if (status==0)
                     {
+                        String sendotp= new DecimalFormat("0000").format(new Random().nextInt(9999));
 
+                        generatenotification(sendotp);
 
                         Intent intent = new Intent(Signup_Actvity.this,verify_OTP_Activity.class);
                         intent.putExtra("number",mobile);
+                        intent.putExtra("otp",sendotp);
 
                         startActivity(intent);
                         finish();
@@ -237,6 +239,21 @@ public class Signup_Actvity extends AppCompatActivity {
     }
 
 
+    void generatenotification(String otp)
+    {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("mych","My Channel", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"mych")
+                .setSmallIcon(R.drawable.logo_symbol_colour)
+                .setContentTitle("Meridean OTP Verify")
+                .setContentText("One Time Password : "+otp);
+        notification = builder.build();
+        notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(1,notification);
+    }
 
 
 
