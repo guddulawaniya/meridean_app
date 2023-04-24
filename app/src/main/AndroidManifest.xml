@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -19,9 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".verify_OTP_Activity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".Setting_Activity"
             android:exported="false" />
@@ -36,10 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".userProfile_Activity"
-            android:exported="true" >
-
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".forget_password"
             android:exported="false" />
@@ -49,20 +45,18 @@
         <activity
             android:name=".Signup_Actvity"
             android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".offline_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".Splash_screen"
-            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".offline_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Splash_screen"
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />

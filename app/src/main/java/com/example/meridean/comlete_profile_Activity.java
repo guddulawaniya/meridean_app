@@ -12,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -52,6 +53,16 @@ public class comlete_profile_Activity extends AppCompatActivity {
          address = findViewById(R.id.address);
          city = findViewById(R.id.city);
          state = findViewById(R.id.state);
+        TextView skiptext = findViewById(R.id.skiptext);
+        skiptext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(comlete_profile_Activity.this,MainActivity.class));
+                overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
+                finish();
+
+            }
+        });
 
 
 
@@ -77,7 +88,9 @@ public class comlete_profile_Activity extends AppCompatActivity {
                 if (checkBox.isChecked())
                 {
                     uploaddataonserver();
-//                    startActivity(new Intent(comlete_profile_Activity.this,MainActivity.class));
+                    startActivity(new Intent(comlete_profile_Activity.this,MainActivity.class));
+                    overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
+                    finish();
                 }
                 else
                 {

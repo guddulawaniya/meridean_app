@@ -198,7 +198,7 @@ public class login_Activity extends AppCompatActivity {
                         editor.putString(PASSWORD_KEY,passwordtext);
                         editor.commit();
 
-                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), userProfile_Activity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
                         finish();
