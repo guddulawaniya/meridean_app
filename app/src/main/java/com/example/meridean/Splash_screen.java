@@ -30,7 +30,7 @@ public class Splash_screen extends AppCompatActivity {
 
                 if (isConnected())
                 {
-                    startActivity(new Intent(Splash_screen.this,login_Activity.class));
+                    startActivity(new Intent(Splash_screen.this,MainActivity.class));
 
                     overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
                     finish();

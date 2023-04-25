@@ -3,6 +3,7 @@ package com.example.meridean;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.common.data.SingleRefDataBufferIterator;
+
 import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,12 +34,19 @@ public class MainActivity extends AppCompatActivity {
     boolean check;
     AlertDialog.Builder builder;
     Timer mytimer;
-
+    SharedPreferences sharedPreferences;
+    static final String SHARE_PREFS = "share_prefs";
+    static final String EMAIL_KEY = "email_key";
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = getSharedPreferences(SHARE_PREFS,MODE_PRIVATE);
+
+
 
 
 
@@ -47,7 +57,16 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         TextView loginbuttonontoolbar = findViewById(R.id.loginbuttononToolbar);
         ImageView profilemenuimage = findViewById(R.id.profilemenuimage);
+        profilemenuimage.setVisibility(View.GONE);
 
+
+        email = sharedPreferences.getString(EMAIL_KEY,null);
+        if (email!=null)
+        {
+            loginbuttonontoolbar.setVisibility(View.GONE);
+            profilemenuimage.setVisibility(View.VISIBLE);
+
+        }
 
 
         WebSettings webSettings = webView.getSettings();

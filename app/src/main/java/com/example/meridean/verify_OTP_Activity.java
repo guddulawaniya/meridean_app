@@ -128,6 +128,12 @@ public class verify_OTP_Activity extends AppCompatActivity {
         }.start();
     }
 
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.left_in,R.anim.right_out);
+        super.onBackPressed();
+    }
+
     void generatenotification(String otp)
     {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){

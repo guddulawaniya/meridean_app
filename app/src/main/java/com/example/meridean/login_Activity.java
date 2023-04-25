@@ -132,6 +132,7 @@ public class login_Activity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onStart() {
 
@@ -177,8 +178,14 @@ public class login_Activity extends AppCompatActivity {
         return connected;
     }
 
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.left_in,R.anim.right_out);
+        super.onBackPressed();
 
-    void logincode(String emailtext,String passwordtext)
+    }
+
+    void logincode(String emailtext, String passwordtext)
 
     {
         String addurl = url+"?email="+emailtext+"&password="+passwordtext;
