@@ -1,11 +1,13 @@
 package com.example.meridean;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +18,27 @@ public class userProfile_Activity extends AppCompatActivity {
 
     int SELECT_IMAGE = 200;
     ImageView profile_image;
+    SharedPreferences sharedPreferences;
+    static final String SHARE_PREFE = "share_pre";
 
+    static final String YOUR_NAME = "your_name";
+    static final String EMAIL_ID = "email_id";
+    static final String DOB = "dob";
+    static final String GENDER = "gender";
+    static final String CONTAXT_NO = "contactnumber";
+    static final String PIN_CODE = "pincode";
+    static final String ADDRESS = "address";
+    static final String CITY = "city";
+    static final String STATE = "state";
+    static final String COUNTRY = "country";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         DialogFragment dialogFragment = new Edit_profile_Fragment();
+
+
+        sharedPreferences = getSharedPreferences(SHARE_PREFE,MODE_PRIVATE);
 
 
         CardView changeimage = findViewById(R.id.changeimage);
@@ -31,6 +48,28 @@ public class userProfile_Activity extends AppCompatActivity {
         CardView paymentcard = findViewById(R.id.paymentcard);
         CardView notificationcard = findViewById(R.id.notificationcard);
         CardView settingcard = findViewById(R.id.settingcard);
+
+        TextView studentname = findViewById(R.id.studentname);
+        TextView dob = findViewById(R.id.setdob);
+        TextView email = findViewById(R.id.studentemail);
+        TextView contactno = findViewById(R.id.setcontactno);
+        TextView city = findViewById(R.id.setcity);
+        TextView state = findViewById(R.id.setstate);
+        TextView country = findViewById(R.id.setcountry);
+        TextView address = findViewById(R.id.setaddress);
+        TextView gender = findViewById(R.id.gender);
+        TextView pincode = findViewById(R.id.setpincode);
+
+        studentname.setText(sharedPreferences.getString(YOUR_NAME,null));
+        dob.setText(sharedPreferences.getString(DOB,null));
+        email.setText(sharedPreferences.getString(EMAIL_ID,null));
+        contactno.setText(sharedPreferences.getString(CONTAXT_NO,null));
+        address.setText(sharedPreferences.getString(ADDRESS,null));
+        city.setText(sharedPreferences.getString(CITY,null));
+        state.setText(sharedPreferences.getString(STATE,null));
+        country.setText(sharedPreferences.getString(COUNTRY,null));
+        gender.setText(sharedPreferences.getString(GENDER,null));
+        pincode.setText(sharedPreferences.getString(PIN_CODE,null));
 
         paymentcard.setOnClickListener(new View.OnClickListener() {
             @Override

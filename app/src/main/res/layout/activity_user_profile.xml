@@ -89,23 +89,27 @@
 
                         <TextView
                             android:id="@+id/studentname"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
+                            android:gravity="center"
                             android:fontFamily="@font/oswald"
-                            android:text="Student name"
+                            android:textColorHint="@color/hinttextcolor"
+                            android:hint="Student name"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/studentemail"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
+                            android:gravity="center"
                             android:layout_marginTop="4dp"
+                            android:textColorHint="@color/hinttextcolor"
                             android:fontFamily="@font/poppins"
-                            android:text="StudentEmailId@gmail.com"
+                            android:hint="StudentEmailId@gmail.com"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -301,14 +305,15 @@
                                         android:textSize="16sp" />
 
                                     <TextView
+                                        android:id="@+id/setdob"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentEnd="true"
                                         android:fontFamily="@font/poppins"
-                                        android:gravity="right|left"
+                                        android:gravity="right"
                                         android:padding="3dp"
-                                        android:text="02 May 2022"
+                                        android:hint="02 May 2022"
                                         android:textColor="@color/textcolor"
                                         android:textSize="16sp" />
                                 </RelativeLayout>
@@ -332,14 +337,15 @@
                                         android:textSize="16sp" />
 
                                     <TextView
+                                        android:id="@+id/gender"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentEnd="true"
                                         android:fontFamily="@font/poppins"
-                                        android:gravity="right|left"
+                                        android:gravity="right"
                                         android:padding="3dp"
-                                        android:text="Male"
+                                        android:hint="Male"
                                         android:textColor="@color/textcolor"
                                         android:textSize="16sp" />
                                 </RelativeLayout>
@@ -364,14 +370,15 @@
                                         android:textSize="16sp" />
 
                                     <TextView
+                                        android:id="@+id/setcontactno"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentEnd="true"
                                         android:fontFamily="@font/poppins"
-                                        android:gravity="right|left"
+                                        android:gravity="right"
                                         android:padding="3dp"
-                                        android:text="+91 - 8937XXXXX"
+                                        android:hint="+91 - 8937XXXXX"
                                         android:textColor="@color/textcolor"
                                         android:textSize="16sp" />
                                 </RelativeLayout>
@@ -396,14 +403,47 @@
                                         android:textSize="16sp" />
 
                                     <TextView
+                                        android:id="@+id/setaddress"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentEnd="true"
                                         android:fontFamily="@font/poppins"
-                                        android:gravity="right|left"
+                                        android:gravity="right"
                                         android:padding="3dp"
-                                        android:text="Plot 8A, Tech Zone Noida"
+                                        android:hint="Plot 8A, Tech Zone Noida"
+                                        android:textColor="@color/textcolor"
+                                        android:textSize="16sp" />
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="8dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentEnd="false"
+                                        android:layout_alignParentBottom="false"
+                                        android:fontFamily="@font/poppins"
+                                        android:gravity="left"
+                                        android:padding="3dp"
+                                        android:text="Pincode"
+                                        android:textColor="@color/textcolor"
+                                        android:textSize="16sp" />
+
+                                    <TextView
+                                        android:id="@+id/setpincode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:fontFamily="@font/poppins"
+                                        android:gravity="right"
+                                        android:padding="3dp"
+                                        android:hint="302021"
                                         android:textColor="@color/textcolor"
                                         android:textSize="16sp" />
                                 </RelativeLayout>
@@ -428,14 +468,15 @@
                                         android:textSize="16sp" />
 
                                     <TextView
+                                        android:id="@+id/setcity"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentEnd="true"
                                         android:fontFamily="@font/poppins"
-                                        android:gravity="right|left"
+                                        android:gravity="right"
                                         android:padding="3dp"
-                                        android:text="Jaipur"
+                                        android:hint="Jaipur"
                                         android:textColor="@color/textcolor"
                                         android:textSize="16sp" />
                                 </RelativeLayout>
@@ -460,14 +501,15 @@
                                         android:textSize="16sp" />
 
                                     <TextView
+                                        android:id="@+id/setstate"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentEnd="true"
                                         android:fontFamily="@font/poppins"
-                                        android:gravity="right|left"
+                                        android:gravity="right"
                                         android:padding="3dp"
-                                        android:text="Uttar Pradesh"
+                                        android:hint="Uttar Pradesh"
                                         android:textColor="@color/textcolor"
                                         android:textSize="16sp" />
                                 </RelativeLayout>
@@ -492,14 +534,15 @@
                                         android:textSize="16sp" />
 
                                     <TextView
+                                        android:id="@+id/setcountry"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentEnd="true"
                                         android:fontFamily="@font/poppins"
-                                        android:gravity="right|left"
+                                        android:gravity="right"
                                         android:padding="3dp"
-                                        android:text="India"
+                                        android:hint="India"
                                         android:textColor="@color/textcolor"
                                         android:textSize="16sp" />
                                 </RelativeLayout>

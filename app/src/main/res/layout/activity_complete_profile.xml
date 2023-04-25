@@ -220,6 +220,7 @@
                         android:id="@+id/selectcountry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
                         android:fontFamily="@font/poppins"
                         android:textColor="@color/textcolor"
                         android:textSize="16sp" />
