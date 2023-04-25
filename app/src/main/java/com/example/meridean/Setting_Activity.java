@@ -29,7 +29,7 @@ public class Setting_Activity extends AppCompatActivity {
             public void onClick(View view) {
                startActivity(new Intent(Setting_Activity.this, userProfile_Activity.class));
                 overridePendingTransition(R.anim.left_in,R.anim.right_out);
-               finish();
+                finish();
             }
         });
 
@@ -50,6 +50,9 @@ public class Setting_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        startActivity(new Intent(Setting_Activity.this, userProfile_Activity.class));
+        overridePendingTransition(R.anim.left_in,R.anim.right_out);
+        finish();
         super.onBackPressed();
     }
 }

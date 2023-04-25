@@ -136,7 +136,7 @@ public class Edit_profile_Fragment extends DialogFragment {
                 String citytext = binding.updatecity.getText().toString().trim();
                 String statetext = binding.updatestate.getText().toString().trim();
                 String countrytext = binding.selectcountryupdate.getText().toString().trim();
-                if (!nametext.isEmpty() && !dobtext.isEmpty() &&!gendertext.isEmpty() && ! emailtext.isEmpty() && binding.updatecheckbox.isChecked())
+                if (!nametext.isEmpty() && !dobtext.isEmpty() &&!gendertext.isEmpty() && ! emailtext.isEmpty())
                 {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(YOUR_NAME,nametext);
@@ -196,8 +196,6 @@ public class Edit_profile_Fragment extends DialogFragment {
 
                     JSONObject obj = new JSONObject(s);
                     int status = obj.getInt("status");
-
-                    Toast.makeText(getContext(), "status "+status, Toast.LENGTH_SHORT).show();
 //                    String namel = users.getString("name");
 //                    String dob = users.getString("dob");
 //                    String pincode = users.getString("pincode");
@@ -207,7 +205,7 @@ public class Edit_profile_Fragment extends DialogFragment {
 //                    String country = users.getString("country");
                     if (status==0)
                     {
-                        Toast.makeText(getContext(), "data successfully uploaded in server", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "data successfully updated", Toast.LENGTH_SHORT).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -241,6 +239,7 @@ public class Edit_profile_Fragment extends DialogFragment {
         uploaddata up = new uploaddata();
         up.execute(customurl);
     }
+
 
     @Override
     public void onStart()

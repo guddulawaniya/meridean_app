@@ -261,6 +261,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:hint="Country"
                     android:textColorHint="#9F9E9E"
+                    android:layout_marginBottom="50dp"
                     app:endIconTint="@color/button_icon_color"
                     app:boxStrokeColor="@color/basecolor"
                     app:boxStrokeErrorColor="#EA0000"
@@ -277,18 +278,6 @@
                         android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/updatecheckbox"
-                    android:layout_marginBottom="20dp"
-                    android:buttonTint="@color/buttonbgcolor"
-                    android:fontFamily="@font/poppins"
-                    android:text="Click Now"
-                    android:textColor="@color/textcolor"
-                    android:textSize="16sp" />
 
 
             </LinearLayout>
