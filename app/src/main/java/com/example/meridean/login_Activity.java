@@ -132,6 +132,13 @@ public class login_Activity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
+        finish();
+        super.onBackPressed();
+    }
 
     @Override
     protected void onStart() {
@@ -178,12 +185,6 @@ public class login_Activity extends AppCompatActivity {
         return connected;
     }
 
-    @Override
-    public void onBackPressed() {
-        overridePendingTransition(R.anim.left_in,R.anim.right_out);
-        super.onBackPressed();
-
-    }
 
     void logincode(String emailtext, String passwordtext)
 
@@ -233,9 +234,6 @@ public class login_Activity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
     }
-
-
-
 
 
 }
