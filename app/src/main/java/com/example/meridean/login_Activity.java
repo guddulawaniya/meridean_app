@@ -40,6 +40,7 @@ public class login_Activity extends AppCompatActivity {
      static  final String PASSWORD_KEY = "password_key";
 
      String email,password;
+     TextView errorshowtext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class login_Activity extends AppCompatActivity {
         TextInputLayout emaillayoutlg = findViewById(R.id.emaillayoutlg);
         TextInputLayout passlayoutlg = findViewById(R.id.passwordlayoutlg);
 
+        errorshowtext = findViewById(R.id.errorshowtext);
 
         builder = new AlertDialog.Builder(this);
         builder.setTitle("Login details");
@@ -61,6 +63,7 @@ public class login_Activity extends AppCompatActivity {
 
          email = sharedPreferences.getString(EMAIL_KEY,null);
         password = sharedPreferences.getString(PASSWORD_KEY,null);
+
 
 
 
@@ -211,7 +214,10 @@ public class login_Activity extends AppCompatActivity {
                         overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
                         finish();
                     }
-                    else Toast.makeText(login_Activity.this, "false", Toast.LENGTH_SHORT).show();
+                    else {
+                        errorshowtext.setVisibility(View.VISIBLE);
+                        errorshowtext.setText("Invalid Id and Password");
+                    }
 
 
                 }

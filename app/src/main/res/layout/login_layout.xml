@@ -25,11 +25,23 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:text="Sign In"
             android:textColor="@color/headingcolor"
             android:textSize="24sp"
             app:fontFamily="@font/oswald" />
+
+        <TextView
+            android:id="@+id/errorshowtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="TextView"
+            android:visibility="gone"
+            android:textColor="#FD0909" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emaillayoutlg"

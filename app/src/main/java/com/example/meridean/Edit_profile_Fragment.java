@@ -113,6 +113,12 @@ public class Edit_profile_Fragment extends DialogFragment {
             }
         });
 
+        binding.closefragmentbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDialog().dismiss();
+            }
+        });
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),android.R.layout.select_dialog_item, arr);
