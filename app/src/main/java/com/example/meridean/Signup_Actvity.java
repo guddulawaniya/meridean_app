@@ -1,10 +1,12 @@
 package com.example.meridean;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -12,6 +14,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -20,8 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -46,6 +52,25 @@ public class Signup_Actvity extends AppCompatActivity {
     private Notification notification;
 
 
+    //some runtime permissions
+    private final int REQ_CODE_PERMISSION_SEND_SMS = 121;
+    private final int REQ_CODE_PERMISSION_READ_SMS = 122;
+    private final int REQ_CODE_PERMISSION_RECEIVE_SMS = 123;
+
+
+    // sms sending credentials
+    private final String sendSMSAPI = "https://api.datagenit.com/sms?auth='.$auth.'&msisdn='.$mob.'&senderid='.$sender.'&message='.$msg.'&template_id=1007167427648737765";
+    private final String APIkey = "D!~7113Zz8MHFw1mQ";
+    private final String sendID = "MOECOE";
+    private final String sms = "Hello ! The One Time Password to login for Staff panel is \".$otp.\". This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd";
+
+
+
+    Button createbutton;
+
+
+
+    // Registration API
     String url = "https://demo.merideanoverseas.in/registration.php";
 
     @Override
@@ -54,19 +79,28 @@ public class Signup_Actvity extends AppCompatActivity {
         setContentView(R.layout.signup_layout);
 
 
+
+        //globally find by ids
+
         username = findViewById(R.id.username);
         emailid = findViewById(R.id.emailid);
         password = findViewById(R.id.password);
         mobilenumber = findViewById(R.id.mobilenumber);
-        TextView loginlink = findViewById(R.id.loginlink);
-        Button createbutton = findViewById(R.id.verifybutton);
-        TextView continuemobilenumber = findViewById(R.id.continuemobilenumber);
+        createbutton = findViewById(R.id.verifybutton);
 
+
+        //local find by ids
+
+        TextView loginlink = findViewById(R.id.loginlink);
+        TextView continuemobilenumber = findViewById(R.id.continuemobilenumber);
         TextInputLayout namelayout = findViewById(R.id.yournamelayout);
         TextInputLayout emaillayout = findViewById(R.id.emaillayoutsp);
         TextInputLayout passlayout = findViewById(R.id.passlayoutsp);
         TextInputLayout mobilenumberlayout = findViewById(R.id.mobilenumberlayout);
 
+
+
+        // continue with mobile number  button
 
         continuemobilenumber.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +111,50 @@ public class Signup_Actvity extends AppCompatActivity {
             }
         });
 
+
+
+        // check run time permissions
+
+
+        // sending sms permission
+
+        if(checkPermission(Manifest.permission.SEND_SMS)){
+            createbutton.setEnabled(true);
+        }else{
+            ActivityCompat.requestPermissions(Signup_Actvity.this,
+                    new String[] {Manifest.permission.SEND_SMS},
+                    REQ_CODE_PERMISSION_SEND_SMS);
+        }
+
+
+        // reading sms permission
+
+        if(checkPermission(Manifest.permission.READ_SMS)){
+            createbutton.setEnabled(true);
+        }else{
+            ActivityCompat.requestPermissions(Signup_Actvity.this,
+                    new String[] {Manifest.permission.SEND_SMS},
+                    REQ_CODE_PERMISSION_SEND_SMS);
+        }
+
+
+
+        //***** ***** ***** Checking permission - Receive SMS ***** ***** *****
+
+        if(!checkPermission(Manifest.permission.RECEIVE_SMS)){
+            ActivityCompat.requestPermissions(Signup_Actvity.this,
+                    new String[] {Manifest.permission.RECEIVE_SMS},
+                    REQ_CODE_PERMISSION_RECEIVE_SMS);
+        }
+
+
+        // Registration button
+
         createbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // get the data in string from edit text fields
 
                 String name = username.getText().toString().trim();
                 String email = emailid.getText().toString().trim();
@@ -92,15 +167,24 @@ public class Signup_Actvity extends AppCompatActivity {
                         !mobileno.isEmpty()) {
                     if (Patterns.EMAIL_ADDRESS.matcher(email).matches())
                     {
+                        // internet connection check
                         if (isConnected()) {
 
 
+
+                            // registration function call and pass some paramters
 
                             RegistrationAPI(name, email,mobileno, pass);
 
 
 
-                        } else {
+
+
+                        }
+                        else {
+
+                            //check internet connection of false
+
                             Intent intent = new Intent(Signup_Actvity.this, offline_Activity.class);
                             overridePendingTransition(R.anim.right_in_activity, R.anim.left_out_activity);
                             startActivity(intent);
@@ -141,6 +225,8 @@ public class Signup_Actvity extends AppCompatActivity {
         });
 
 
+        // redirect login page
+
         loginlink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,6 +240,136 @@ public class Signup_Actvity extends AppCompatActivity {
     }
 
 
+
+    // sending sms o
+     String sendotpnumber() {
+
+         try {
+             // Construct data
+             String apiKey = "apikey=" + "D!~7113Zz8MHFw1mQ";
+             String message = "&message=" + sms;
+             String sender = "&sender=" + "MOECOE";
+             String numbers = "&numbers=" + "917037282643";
+
+             // Send data
+             HttpURLConnection conn = (HttpURLConnection) new URL("https://api.datagenit.com/sms?").openConnection();
+
+             String data = apiKey + numbers + message + sender;
+             conn.setDoOutput(true);
+             conn.setRequestMethod("POST");
+             conn.setRequestProperty("Content-Length", Integer.toString(data.length()));
+             conn.getOutputStream().write(data.getBytes("UTF-8"));
+             final BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+             final StringBuffer stringBuffer = new StringBuffer();
+             String line;
+             while ((line = rd.readLine()) != null) {
+                 stringBuffer.append(line);
+             }
+             rd.close();
+
+             return stringBuffer.toString();
+         } catch (Exception e) {
+             Toast.makeText(this, "Error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+             System.out.println("Error SMS "+e);
+             return "Error "+e;
+         }
+
+     }
+
+
+
+
+//    void sendotponnumber()
+//    {
+//        String encoded_message=URLEncoder.encode("verify otp");
+//        //Prepare parameter string
+//        StringBuilder sbPostData= new StringBuilder(SERVER);
+//        sbPostData.append("user="+username);
+//        sbPostData.append("&pass="+password);
+//        sbPostData.append("&mobiles="+mobilenumber);
+//        sbPostData.append("&message="+encoded_message);
+//
+//        //        sbPostData.append("&sid="+sid);
+//        //final string
+//
+//        mainUrl = sbPostData.toString();
+//
+//        try
+//        {
+////prepare connection
+//            myURL = new URL(mainUrl);
+//            myURLConnection = myURL.openConnection();
+//            myURLConnection.connect();
+//            reader= new BufferedReader(new InputStreamReader(myURLConnection.getInputStream()));
+//            //reading response
+//            String response;
+//            while ((response = reader.readLine()) != null)
+//                //print response
+//                Log.d("RESPONSE",""+response);
+//            //finally close connection
+//            reader.close();
+//        }
+//        catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+
+
+//    public void sendSMS(String phone, String msg, String ddate, String dateSent){
+//        // Instantiate the RequestQueue.
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//        String url = SERVER + "?phone=" + phone;
+//        url += "&msg=" + Uri.encode(msg);
+//        url += "&date=" + Uri.encode(ddate);
+//        url += "&date_sent=" + Uri.encode(dateSent);
+//
+//        // Request a string response from the provided URL.
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        // Display the first 500 characters of the response string.
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//
+//        // Add the request to the RequestQueue.
+//        queue.add(stringRequest);
+//    }
+
+
+    private boolean checkPermission(String permission) {
+        int permissionCode = ContextCompat.checkSelfPermission(this, permission);
+        return permissionCode == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQ_CODE_PERMISSION_READ_SMS: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(mobilenumber.getText().toString(), null, "verify otp ", null, null);
+                    Toast.makeText(getApplicationContext(), "SMS sent.",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+    }
     void signupcheckvalidation(TextInputEditText text, TextInputLayout emaillayout, String helpertext, int id) {
         switch (id) {
             case 1:
@@ -195,6 +411,8 @@ public class Signup_Actvity extends AppCompatActivity {
                     if (status==0)
                     {
                         String sendotp= new DecimalFormat("0000").format(new Random().nextInt(9999));
+                        sendotpnumber();
+
 
                         generatenotification(sendotp);
 

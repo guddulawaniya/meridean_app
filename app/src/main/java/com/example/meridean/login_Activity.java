@@ -1,13 +1,16 @@
 package com.example.meridean;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -17,6 +20,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,6 +46,8 @@ public class login_Activity extends AppCompatActivity {
 
      String email,password;
      TextView errorshowtext;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,7 +196,10 @@ public class login_Activity extends AppCompatActivity {
     }
 
 
-    void logincode(String emailtext, String passwordtext)
+
+
+
+        void logincode(String emailtext, String passwordtext)
 
     {
         String addurl = url+"?email="+emailtext+"&password="+passwordtext;
