@@ -1,24 +1,27 @@
 package com.example.meridean;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.method.MovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.chaos.view.PinView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
@@ -47,20 +50,20 @@ public class verify_OTP_Activity extends AppCompatActivity {
         sendotp = intent.getStringExtra("otp");
         resendotp = findViewById(R.id.resendotp);
 
-
-        timecounter(sendotp);
-
+        timecounter();
         resendotp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                sendotp= new DecimalFormat("0000").format(new Random().nextInt(9999));
                 if (rdcheck)
                 {
-                    rdcheck = false;
-                    timecounter(sendotp);
+                    rdcheck=false;
+                    sendotp= new DecimalFormat("0000").format(new Random().nextInt(9999));
+                    timecounter();
+                    sendotpnumbers(number,sendotp);
+
                 }
+
 
 
 
@@ -74,9 +77,9 @@ public class verify_OTP_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String myotp=pinView.getText().toString();
+                String enterotpinboxs=pinView.getText().toString();
 
-                if (sendotp.equals(myotp))
+                if (sendotp.equals(enterotpinboxs))
                 {
 
 
@@ -99,11 +102,11 @@ public class verify_OTP_Activity extends AppCompatActivity {
     }
 
 
-    void timecounter(String sendotp)
+    void timecounter()
     {
 
 
-        generatenotification(sendotp);
+
         new CountDownTimer(30000,1000)
         {
 
@@ -135,21 +138,74 @@ public class verify_OTP_Activity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    void generatenotification(String otp)
-    {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("mych","My Channel", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel);
+    void sendotpnumbers(String mobile, String sendotp) {
+
+        final String sms = "Hello ! The One Time Password " +
+                "to login for Staff panel is "+sendotp+" This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd";
+
+        String addurlsignup = "https://api.datagenit.com/sms?auth=D!~7113Zz8MHFw1mQ&senderid=MOECOE&msisdn="+mobile+"&message="+sms;
+
+
+        class sendotp extends AsyncTask<String, String, String> {
+            @Override
+            protected void onPostExecute(String s) {
+
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    int status = obj.getInt("code");
+                    if (status==100)
+                    {
+
+                        Toast.makeText(verify_OTP_Activity.this, " Again Please check your inbox", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else
+                    {
+                        Toast.makeText(verify_OTP_Activity.this, "Unable to retrive any data on server", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+                super.onPostExecute(s);
+            }
+
+            @Override
+            protected String doInBackground(String... param) {
+
+
+                try {
+                    URL url = new URL(param[0]);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    return br.readLine();
+                } catch (Exception ex) {
+                    return ex.getMessage();
+                }
+
+            }
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"mych")
-                .setSmallIcon(R.drawable.logo_symbol_colour)
-                .setContentTitle("Meridean OTP Verify")
-                .setContentText("One Time Password : "+otp);
-        notification = builder.build();
-        notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(1,notification);
+        sendotp obj = new sendotp();
+        obj.execute(addurlsignup);
+
     }
+
+//    void generatenotification(String otp)
+//    {
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            NotificationChannel channel = new NotificationChannel("mych","My Channel", NotificationManager.IMPORTANCE_DEFAULT);
+//            NotificationManager manager = getSystemService(NotificationManager.class);
+//            manager.createNotificationChannel(channel);
+//        }
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"mych")
+//                .setSmallIcon(R.drawable.logo_symbol_colour)
+//                .setContentTitle("Meridean OTP Verify")
+//                .setContentText("One Time Password : "+otp);
+//        notification = builder.build();
+//        notificationManagerCompat = NotificationManagerCompat.from(this);
+//        notificationManagerCompat.notify(1,notification);
+//    }
 
 
 }

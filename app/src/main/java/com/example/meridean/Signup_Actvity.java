@@ -14,7 +14,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.util.Patterns;
@@ -58,11 +57,6 @@ public class Signup_Actvity extends AppCompatActivity {
     private final int REQ_CODE_PERMISSION_RECEIVE_SMS = 123;
 
 
-    // sms sending credentials
-    private final String sendSMSAPI = "https://api.datagenit.com/sms?auth='.$auth.'&msisdn='.$mob.'&senderid='.$sender.'&message='.$msg.'&template_id=1007167427648737765";
-    private final String APIkey = "D!~7113Zz8MHFw1mQ";
-    private final String sendID = "MOECOE";
-    private final String sms = "Hello ! The One Time Password to login for Staff panel is \".$otp.\". This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd";
 
 
 
@@ -240,112 +234,6 @@ public class Signup_Actvity extends AppCompatActivity {
     }
 
 
-
-    // sending sms o
-     String sendotpnumber() {
-
-         try {
-             // Construct data
-             String apiKey = "apikey=" + "D!~7113Zz8MHFw1mQ";
-             String message = "&message=" + sms;
-             String sender = "&sender=" + "MOECOE";
-             String numbers = "&numbers=" + "917037282643";
-
-             // Send data
-             HttpURLConnection conn = (HttpURLConnection) new URL("https://api.datagenit.com/sms?").openConnection();
-
-             String data = apiKey + numbers + message + sender;
-             conn.setDoOutput(true);
-             conn.setRequestMethod("POST");
-             conn.setRequestProperty("Content-Length", Integer.toString(data.length()));
-             conn.getOutputStream().write(data.getBytes("UTF-8"));
-             final BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-             final StringBuffer stringBuffer = new StringBuffer();
-             String line;
-             while ((line = rd.readLine()) != null) {
-                 stringBuffer.append(line);
-             }
-             rd.close();
-
-             return stringBuffer.toString();
-         } catch (Exception e) {
-             Toast.makeText(this, "Error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
-             System.out.println("Error SMS "+e);
-             return "Error "+e;
-         }
-
-     }
-
-
-
-
-//    void sendotponnumber()
-//    {
-//        String encoded_message=URLEncoder.encode("verify otp");
-//        //Prepare parameter string
-//        StringBuilder sbPostData= new StringBuilder(SERVER);
-//        sbPostData.append("user="+username);
-//        sbPostData.append("&pass="+password);
-//        sbPostData.append("&mobiles="+mobilenumber);
-//        sbPostData.append("&message="+encoded_message);
-//
-//        //        sbPostData.append("&sid="+sid);
-//        //final string
-//
-//        mainUrl = sbPostData.toString();
-//
-//        try
-//        {
-////prepare connection
-//            myURL = new URL(mainUrl);
-//            myURLConnection = myURL.openConnection();
-//            myURLConnection.connect();
-//            reader= new BufferedReader(new InputStreamReader(myURLConnection.getInputStream()));
-//            //reading response
-//            String response;
-//            while ((response = reader.readLine()) != null)
-//                //print response
-//                Log.d("RESPONSE",""+response);
-//            //finally close connection
-//            reader.close();
-//        }
-//        catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-
-
-
-
-//    public void sendSMS(String phone, String msg, String ddate, String dateSent){
-//        // Instantiate the RequestQueue.
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        String url = SERVER + "?phone=" + phone;
-//        url += "&msg=" + Uri.encode(msg);
-//        url += "&date=" + Uri.encode(ddate);
-//        url += "&date_sent=" + Uri.encode(dateSent);
-//
-//        // Request a string response from the provided URL.
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // Display the first 500 characters of the response string.
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        // Add the request to the RequestQueue.
-//        queue.add(stringRequest);
-//    }
-
-
     private boolean checkPermission(String permission) {
         int permissionCode = ContextCompat.checkSelfPermission(this, permission);
         return permissionCode == PackageManager.PERMISSION_GRANTED;
@@ -365,7 +253,6 @@ public class Signup_Actvity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "SMS faild, please try again.", Toast.LENGTH_LONG).show();
-                    return;
                 }
             }
         }
@@ -390,6 +277,61 @@ public class Signup_Actvity extends AppCompatActivity {
     }
 
 
+
+
+    void sendotpnumbers(String mobile, String sendotp) {
+
+         final String sms = "Hello ! The One Time Password " +
+                "to login for Staff panel is "+sendotp+" This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd";
+
+        String addurlsignup = "https://api.datagenit.com/sms?auth=D!~7113Zz8MHFw1mQ&senderid=MOECOE&msisdn="+mobile+"&message="+sms;
+
+
+        class sendotp extends AsyncTask<String, String, String> {
+            @Override
+            protected void onPostExecute(String s) {
+
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    int status = obj.getInt("code");
+                    if (status==100)
+                    {
+
+                        Toast.makeText(Signup_Actvity.this, "Please check your inbox", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else
+                    {
+                        Toast.makeText(Signup_Actvity.this, "Unable to retrive any data on server", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+                super.onPostExecute(s);
+            }
+
+            @Override
+            protected String doInBackground(String... param) {
+
+
+                try {
+                    URL url = new URL(param[0]);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    return br.readLine();
+                } catch (Exception ex) {
+                    return ex.getMessage();
+                }
+
+            }
+        }
+        sendotp obj = new sendotp();
+        obj.execute(addurlsignup);
+
+    }
+
     void RegistrationAPI(String name, String email,String mobile, String pass) {
 
 
@@ -411,10 +353,10 @@ public class Signup_Actvity extends AppCompatActivity {
                     if (status==0)
                     {
                         String sendotp= new DecimalFormat("0000").format(new Random().nextInt(9999));
-                        sendotpnumber();
+                        sendotpnumbers(mobile,sendotp);
 
 
-                        generatenotification(sendotp);
+//                        generatenotification(sendotp);
 
                         Intent intent = new Intent(Signup_Actvity.this,verify_OTP_Activity.class);
                         intent.putExtra("number",mobile);
@@ -457,21 +399,21 @@ public class Signup_Actvity extends AppCompatActivity {
     }
 
 
-    void generatenotification(String otp)
-    {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("mych","My Channel", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel);
-        }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"mych")
-                .setSmallIcon(R.drawable.logo_symbol_colour)
-                .setContentTitle("Meridean OTP Verify")
-                .setContentText("One Time Password : "+otp);
-        notification = builder.build();
-        notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(1,notification);
-    }
+//    void generatenotification(String otp)
+//    {
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            NotificationChannel channel = new NotificationChannel("mych","My Channel", NotificationManager.IMPORTANCE_DEFAULT);
+//            NotificationManager manager = getSystemService(NotificationManager.class);
+//            manager.createNotificationChannel(channel);
+//        }
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"mych")
+//                .setSmallIcon(R.drawable.logo_symbol_colour)
+//                .setContentTitle("Meridean OTP Verify")
+//                .setContentText("One Time Password : "+otp);
+//        notification = builder.build();
+//        notificationManagerCompat = NotificationManagerCompat.from(this);
+//        notificationManagerCompat.notify(1,notification);
+//    }
 
 
 
