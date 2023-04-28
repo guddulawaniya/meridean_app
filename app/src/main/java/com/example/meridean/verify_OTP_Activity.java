@@ -105,8 +105,6 @@ public class verify_OTP_Activity extends AppCompatActivity {
     void timecounter()
     {
 
-
-
         new CountDownTimer(30000,1000)
         {
 
