@@ -121,7 +121,7 @@
                     app:boxStrokeErrorColor="#EA0606"
 
                     app:hintTextColor="@color/basecolor"
-                    app:startIconDrawable="@drawable/mobilenumber_icon"
+                    app:startIconDrawable="@drawable/contact_icon"
                     app:startIconTint="@color/button_icon_color">
 
                     <!--this is the actual edit text which takes the input-->

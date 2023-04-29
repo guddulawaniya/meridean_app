@@ -27,6 +27,7 @@ import java.text.NumberFormat;
 import java.util.Random;
 
 
+
 public class verify_OTP_Activity extends AppCompatActivity {
 
     PinView pinView;
@@ -100,6 +101,7 @@ public class verify_OTP_Activity extends AppCompatActivity {
 
 
     }
+
 
 
     void timecounter()

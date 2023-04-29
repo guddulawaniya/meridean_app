@@ -45,14 +45,13 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="1dp"
         android:orientation="vertical"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,5 +67,100 @@
             android:text="Logout"
             android:textColor="@color/textcolor"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/changepassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:drawableEnd="@drawable/password_icon"
+            android:padding="4dp"
+            android:text="Change Password"
+            android:textColor="@color/textcolor"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/passwordlinearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="25dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:boxStrokeColor="@color/basecolor"
+                android:id="@+id/currentpasstextlayout"
+                app:hintTextColor="@color/basecolor"
+                android:textColorHint="@color/hinttextcolor"
+                android:hint="Current Password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:textSize="18dp"
+                    android:background="#EEEEFF"
+                    android:id="@+id/currentpasstext"
+                    android:textColor="@color/textcolor"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newmpasstextlayout"
+                app:hintTextColor="@color/basecolor"
+                app:boxStrokeColor="@color/basecolor"
+                android:textColorHint="@color/hinttextcolor"
+                android:layout_marginTop="15dp"
+                android:hint="New Password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:textSize="18dp"
+                    android:background="#EEEEFF"
+                    android:id="@+id/newmpasstext"
+                    android:textColor="@color/textcolor"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextColor="@color/basecolor"
+                android:id="@+id/confirmpasstextlayout"
+                app:boxStrokeColor="@color/basecolor"
+                android:textColorHint="@color/hinttextcolor"
+                android:layout_marginTop="15dp"
+                android:hint="Confirm Password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/confirmpasstext"
+                    android:textColor="@color/textcolor"
+                    android:background="#EEEEFF"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/changepasswordbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Change Password" />
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

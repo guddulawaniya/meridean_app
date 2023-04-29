@@ -46,7 +46,7 @@
             app:boxStrokeErrorColor="#EA0606"
             app:hintTextColor="@color/basecolor"
 
-            app:startIconDrawable="@drawable/email_icon"
+            app:startIconDrawable="@drawable/contact_icon"
             app:startIconTint="@color/button_icon_color"
             tools:ignore="MissingConstraints">
 
