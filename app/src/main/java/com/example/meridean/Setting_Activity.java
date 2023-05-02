@@ -40,6 +40,8 @@ public class Setting_Activity extends AppCompatActivity {
         TextInputLayout currentlayout = findViewById(R.id.currentpasstextlayout);
         TextInputLayout newlayout = findViewById(R.id.newmpasstextlayout);
         TextInputLayout confirmlayout = findViewById(R.id.confirmpasstextlayout);
+
+
         changepasswordtext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +67,9 @@ public class Setting_Activity extends AppCompatActivity {
                     newpasstext.setText("");
                     confirmpasstext.setText("");
                     currentpasstext.requestFocus();
+                    currentlayout.setError("");
+                    newlayout.setError("");
+                    confirmlayout.setError("");
                 }
                 else if (currentpasstext.getText().toString().isEmpty())
                 {

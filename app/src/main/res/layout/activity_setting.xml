@@ -76,6 +76,7 @@
             android:layout_marginEnd="16dp"
             android:drawableEnd="@drawable/password_icon"
             android:padding="4dp"
+
             android:text="Change Password"
             android:textColor="@color/textcolor"
             android:textSize="18sp" />
@@ -83,6 +84,7 @@
         <LinearLayout
             android:id="@+id/passwordlinearlayout"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
 
             android:layout_marginStart="40dp"

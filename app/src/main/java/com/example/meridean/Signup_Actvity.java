@@ -5,13 +5,13 @@ import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -63,6 +63,7 @@ public class Signup_Actvity extends AppCompatActivity {
 
 
     Button createbutton;
+    TextInputLayout namelayout,emaillayout,passlayout,mobilenumberlayout;
 
 
     // Registration API
@@ -87,10 +88,10 @@ public class Signup_Actvity extends AppCompatActivity {
 
         TextView loginlink = findViewById(R.id.loginlink);
         TextView continuemobilenumber = findViewById(R.id.continuemobilenumber);
-        TextInputLayout namelayout = findViewById(R.id.yournamelayout);
-        TextInputLayout emaillayout = findViewById(R.id.emaillayoutsp);
-        TextInputLayout passlayout = findViewById(R.id.passlayoutsp);
-        TextInputLayout mobilenumberlayout = findViewById(R.id.mobilenumberlayout);
+         namelayout = findViewById(R.id.yournamelayout);
+         emaillayout = findViewById(R.id.emaillayoutsp);
+         passlayout = findViewById(R.id.passlayoutsp);
+         mobilenumberlayout = findViewById(R.id.mobilenumberlayout);
 
 
         // continue with mobile number  button
@@ -101,6 +102,80 @@ public class Signup_Actvity extends AppCompatActivity {
                 startActivity(new Intent(Signup_Actvity.this, phone_Activity.class));
                 overridePendingTransition(R.anim.right_in_activity, R.anim.left_out_activity);
 
+            }
+        });
+
+
+
+        ontextwatchError();
+
+
+        // Registration button
+
+        createbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // get the data in string from edit text fields
+
+                String name = username.getText().toString().trim();
+                String email = emailid.getText().toString().trim();
+                String pass = password.getText().toString().trim();
+                String mobileno = mobilenumber.getText().toString().trim();
+
+
+                if (!name.isEmpty() && !(email.isEmpty()) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && !(pass.isEmpty())&& (pass.length() <= 16) &&
+                        !mobileno.isEmpty()) {
+                        // internet connection check
+                        if (isConnected()) {
+
+
+                            // registration function call and pass some paramters
+
+                            RegistrationAPI(name, email, mobileno, pass);
+
+
+                        }
+                        else {
+
+                            //check internet connection of false
+
+                            Intent intent = new Intent(Signup_Actvity.this, offline_Activity.class);
+                            overridePendingTransition(R.anim.right_in_activity, R.anim.left_out_activity);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                } else if (name.isEmpty()) {
+
+                    namelayout.setError("Required");
+                    username.requestFocus();
+
+
+                } else if (email.isEmpty()) {
+                    emaillayout.setError("Required");
+                    emailid.requestFocus();
+
+                }
+                else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    emaillayout.setError("Invalid Email Address");
+                    emailid.requestFocus();
+
+                } else if (mobileno.isEmpty()) {
+
+                    mobilenumberlayout.setError("Required");
+                    mobilenumber.requestFocus();
+
+
+                } else if (pass.length() > 16) {
+
+                    passlayout.setError("Password Length is Long");
+                    password.requestFocus();
+                } else if (pass.isEmpty()) {
+                    passlayout.setError("Required");
+                    password.requestFocus();
+
+                }
             }
         });
 
@@ -138,73 +213,6 @@ public class Signup_Actvity extends AppCompatActivity {
                     REQ_CODE_PERMISSION_RECEIVE_SMS);
         }
 
-
-        // Registration button
-
-        createbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // get the data in string from edit text fields
-
-                String name = username.getText().toString().trim();
-                String email = emailid.getText().toString().trim();
-                String pass = password.getText().toString().trim();
-                String mobileno = mobilenumber.getText().toString().trim();
-
-
-                if (!name.isEmpty() && !(email.isEmpty()) && !(pass.isEmpty()) && (pass.length() <= 16) &&
-                        !mobileno.isEmpty()) {
-                    if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                        // internet connection check
-                        if (isConnected()) {
-
-
-                            // registration function call and pass some paramters
-
-                            RegistrationAPI(name, email, mobileno, pass);
-
-
-                        } else {
-
-                            //check internet connection of false
-
-                            Intent intent = new Intent(Signup_Actvity.this, offline_Activity.class);
-                            overridePendingTransition(R.anim.right_in_activity, R.anim.left_out_activity);
-                            startActivity(intent);
-                            finish();
-                        }
-                    } else {
-                        int id = 2;
-                        signupcheckvalidation(emailid, emaillayout, "Please Enter valid Email id ", id);
-                    }
-
-
-                } else if (name.isEmpty()) {
-
-                    int id = 2;
-                    signupcheckvalidation(username, namelayout, "Required", id);
-
-                } else if (email.isEmpty()) {
-                    int id = 2;
-                    signupcheckvalidation(emailid, emaillayout, "Required", id);
-
-                } else if (mobileno.isEmpty()) {
-                    int id = 2;
-                    signupcheckvalidation(mobilenumber, mobilenumberlayout, "Required", id);
-
-                } else if (pass.length() > 16) {
-                    int id = 1;
-                    signupcheckvalidation(password, passlayout, "Password Length is very long", id);
-                } else if (pass.isEmpty()) {
-                    int id = 1;
-                    signupcheckvalidation(password, passlayout, "Required", id);
-
-                }
-            }
-        });
-
-
         // redirect login page
 
         loginlink.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +225,99 @@ public class Signup_Actvity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    void ontextwatchError()
+    {
+        username.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length()>0)
+                {
+                    namelayout.setErrorEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        emailid.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (Patterns.EMAIL_ADDRESS.matcher(emailid.getText().toString()).matches())
+                {
+                    emaillayout.setErrorEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+
+            }
+        });
+        mobilenumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length()>0)
+                {
+                    mobilenumberlayout.setErrorEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length()>0 && charSequence.length()<16)
+                {
+                    passlayout.setErrorEnabled(false);
+                } else if (charSequence.length()>=16) {
+
+                    passlayout.setErrorEnabled(true);
+                    passlayout.setError("Password Length is Long");
+                    passlayout.setCounterEnabled(true);
+                    passlayout.setCounterMaxLength(16);
+                    password.requestFocus();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     // check some runtime permissions
@@ -244,26 +345,7 @@ public class Signup_Actvity extends AppCompatActivity {
             }
         }
     }
-    // show error designing
 
-    void signupcheckvalidation(TextInputEditText text, TextInputLayout emaillayout, String helpertext, int id) {
-        switch (id) {
-            case 1:
-                emaillayout.setHelperText(helpertext);
-                emaillayout.setCounterEnabled(true);
-                emaillayout.setCounterMaxLength(16);
-                break;
-            case 2:
-                emaillayout.setHelperText(helpertext);
-                break;
-
-        }
-
-        emaillayout.setHelperTextColor(ColorStateList.valueOf(Color.RED));
-        emaillayout.setBoxStrokeColor(Color.RED);
-        emaillayout.setHintTextColor(ColorStateList.valueOf(Color.RED));
-        text.requestFocus();
-    }
 
     // send otp on email
     void sendemailOTP(String email, String sendotp) {

@@ -1,27 +1,23 @@
 package com.example.meridean;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.telephony.SmsManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,27 +36,29 @@ public class login_Activity extends AppCompatActivity {
     String url = "https://demo.merideanoverseas.in/login.php";
     AlertDialog.Builder builder;
     SharedPreferences sharedPreferences;
-     static final String SHARE_PREFS = "share_prefs";
-     static final String EMAIL_KEY = "email_key";
-     static  final String PASSWORD_KEY = "password_key";
+    static final String SHARE_PREFS = "share_prefs";
+    static final String EMAIL_KEY = "email_key";
+    static  final String PASSWORD_KEY = "password_key";
 
-     String email,password;
-     TextView errorshowtext;
+    String email,password;
+    TextView errorshowtext;
 
 
+    TextInputEditText  emailidlg,passwordlg;
+    TextInputLayout emaillayoutlg,passlayoutlg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
-        TextInputEditText emailidlg = findViewById(R.id.emailidlg);
-        TextInputEditText passwordlg = findViewById(R.id.passwordlg);
+        emailidlg = findViewById(R.id.emailidlg);
+        passwordlg = findViewById(R.id.passwordlg);
         Button loginbutton = findViewById(R.id.loginbutton);
         TextView forgetlink = findViewById(R.id.forgetpasswordlg);
         TextView registrainlink = findViewById(R.id.registraionlink);
-        TextInputLayout emaillayoutlg = findViewById(R.id.emaillayoutlg);
-        TextInputLayout passlayoutlg = findViewById(R.id.passwordlayoutlg);
+        emaillayoutlg = findViewById(R.id.emaillayoutlg);
+        passlayoutlg = findViewById(R.id.passwordlayoutlg);
 
         errorshowtext = findViewById(R.id.errorshowtext);
 
@@ -68,9 +66,10 @@ public class login_Activity extends AppCompatActivity {
         builder.setTitle("Login details");
         sharedPreferences = getSharedPreferences(SHARE_PREFS,Context.MODE_PRIVATE);
 
-         email = sharedPreferences.getString(EMAIL_KEY,null);
+        email = sharedPreferences.getString(EMAIL_KEY,null);
         password = sharedPreferences.getString(PASSWORD_KEY,null);
 
+        textwatherError();
 
 
 
@@ -80,44 +79,41 @@ public class login_Activity extends AppCompatActivity {
                 String emailtext = emailidlg.getText().toString().trim();
                 String passtext = passwordlg.getText().toString().trim();
 
-                if (!emailtext.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailtext).matches()) {
+                if (!emailtext.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailtext).matches() && !(passtext.isEmpty()) && (passtext.length() <= 16) && isConnected() ) {
 
-                    if ( !(passtext.isEmpty()) && (passtext.length() <= 16)) {
+                        logincode(emailtext, passtext);
 
-                        if (isConnected()) {
-
-
-
-
-                            logincode(emailtext, passtext);
-
-
-                        } else {
-                            Intent intent = new Intent(login_Activity.this, offline_Activity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.right_in_activity, R.anim.left_out_activity);
-                            finish();
-
-                        }
-
-                    }else if (passtext.length() > 16) {
-                        int id = 1;
-                        checkvalidation(passwordlg, passlayoutlg, "Password Length is very long", id);
-                    } else if (passtext.isEmpty()) {
-                        int id = 1;
-                        checkvalidation(passwordlg, passlayoutlg, "Required*", id);
-                    }
+                }
+                else if(!isConnected())
+                {
+                    Intent intent = new Intent(login_Activity.this, offline_Activity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.right_in_activity, R.anim.left_out_activity);
+                    finish();
                 }
                 else if (emailtext.isEmpty())
                 {
-                    int id =2;
-                    checkvalidation(emailidlg,emaillayoutlg,"Required*", id);
+                    emaillayoutlg.startAnimation(AnimationUtils.loadAnimation(getApplication(),R.anim.shake_text));
+                    emaillayoutlg.setError("Required*");
+                    emailidlg.requestFocus();
                 }
-                else {
-                    Toast.makeText(login_Activity.this, "Enter valid Email Address !", Toast.LENGTH_SHORT).show();
-                    int id=2;
-                    checkvalidation(emailidlg,emaillayoutlg,"Please Enter valid Email Address", id);
+                else if (!Patterns.EMAIL_ADDRESS.matcher(emailtext).matches())
+                {
+                    emaillayoutlg.startAnimation(AnimationUtils.loadAnimation(getApplication(),R.anim.shake_text));
+                    emaillayoutlg.setError("Invalid Email Address");
+                    emailidlg.requestFocus();
                 }
+                else if (passtext.isEmpty()) {
+                    passlayoutlg.startAnimation(AnimationUtils.loadAnimation(getApplication(),R.anim.shake_text));
+                    passlayoutlg.setError("Required*");
+                    passwordlg.requestFocus();
+                }
+                else if (passtext.length()>=16) {
+                    passlayoutlg.startAnimation(AnimationUtils.loadAnimation(getApplication(),R.anim.shake_text));
+
+                }
+
+
             }
         });
 
@@ -142,6 +138,66 @@ public class login_Activity extends AppCompatActivity {
 
     }
 
+    void textwatherError()
+
+    {
+        emailidlg.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                errorshowtext.setVisibility(View.INVISIBLE);
+
+                if (Patterns.EMAIL_ADDRESS.matcher(emailidlg.getText().toString()).matches())
+                {
+                    emaillayoutlg.setErrorEnabled(false);
+                } else if (emailidlg.getText().toString().length() > 0) {
+                    emaillayoutlg.setError("Invalid Email Address");
+                    emailidlg.requestFocus();
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        passwordlg.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                errorshowtext.setVisibility(View.INVISIBLE);
+
+             if (charSequence.length()>0 && charSequence.length()<=16)
+             {
+                 passlayoutlg.setErrorEnabled(false);
+             }
+             else if (charSequence.length()>=16)
+             {
+                 passlayoutlg.setError("Password Length is Long");
+                 passlayoutlg.setCounterEnabled(true);
+                 passlayoutlg.setCounterMaxLength(16);
+                 passwordlg.requestFocus();
+
+             }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+    }
     @Override
     public void onBackPressed() {
 
@@ -162,26 +218,6 @@ public class login_Activity extends AppCompatActivity {
         super.onStart();
     }
 
-    void checkvalidation(TextInputEditText text, TextInputLayout emaillayout, String helpertext, int id)
-    {
-        switch (id)
-        {
-            case 1: emaillayout.setHelperText(helpertext);
-                    emaillayout.setCounterEnabled(true);
-                    emaillayout.setCounterMaxLength(16);
-                    break;
-            case 2: emaillayout.setHelperText(helpertext);
-                    break;
-
-        }
-
-        emaillayout.setHelperTextColor(ColorStateList.valueOf(Color.RED));
-        emaillayout.setBoxStrokeColor(Color.RED);
-        emaillayout.setHintTextColor(ColorStateList.valueOf(Color.RED));
-        text.requestFocus();
-    }
-
-
     public boolean isConnected() {
         boolean connected = false;
         try {
@@ -199,7 +235,7 @@ public class login_Activity extends AppCompatActivity {
 
 
 
-        void logincode(String emailtext, String passwordtext)
+    void logincode(String emailtext, String passwordtext)
 
     {
         String addurl = url+"?email="+emailtext+"&password="+passwordtext;
@@ -224,10 +260,12 @@ public class login_Activity extends AppCompatActivity {
                         overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
                         finish();
                     }
-                    else {
-                        errorshowtext.setVisibility(View.VISIBLE);
-                        errorshowtext.setText("Invalid Id and Password");
-                    }
+                    else if (errorshowtext.getVisibility()==View.VISIBLE)
+
+                          errorshowtext.startAnimation(AnimationUtils.loadAnimation(getApplication(),R.anim.shake_text));
+                      else
+                          errorshowtext.setVisibility(View.VISIBLE);
+
 
 
                 }
