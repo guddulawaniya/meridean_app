@@ -4,15 +4,19 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 
 public class sendemailotp extends AsyncTask<String, String, String> {
@@ -22,12 +26,12 @@ public class sendemailotp extends AsyncTask<String, String, String> {
     //Information to send email
     private String email;
 
-    private String message;
+    private String sendotp;
 
-    public sendemailotp(Context context,  String email, String message) {
+    public sendemailotp(Context context,  String email, String sendotp) {
         this.context = context;
         this.email = email;
-        this.message = message;
+        this.sendotp = sendotp;
     }
 
     @Override
@@ -53,10 +57,8 @@ public class sendemailotp extends AsyncTask<String, String, String> {
     protected String doInBackground(String... param) {
 
 
-        Properties props = new Properties();
 
-        //Configuring properties for gmail
-        //If you are not using gmail you may need to change the values
+        Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.hostinger.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -73,19 +75,29 @@ public class sendemailotp extends AsyncTask<String, String, String> {
 
         try {
             //Creating MimeMessage object
-            MimeMessage mm = new MimeMessage(session);
-
-            //Setting sender address
-            mm.setFrom(new InternetAddress(config.EMAIL));
+            MimeMessage msg = new MimeMessage(session);
             //Adding receiver
-            mm.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             //Adding subject
-            mm.setSubject("Verification Email");
+            String messages = "<div style=color:black;>Hello ! The One Time Password to login for Staff panel is</div><div style=color:red;>"+sendotp+"</div><div style=color:black;> This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd</div> ";
+
+
+            msg.setSubject("Verification Email");
+            //Setting sender address
+            msg.setFrom(new InternetAddress(config.EMAIL));
+            msg.setSentDate(new Date());
+
+            MimeBodyPart htmlPart = new MimeBodyPart();
             //Adding message
-            mm.setText(message);
+            htmlPart.setContent(messages, "text/html");
+
+            Multipart mp = new MimeMultipart();
+            mp.addBodyPart(htmlPart);
+
+            msg.setContent(mp);
 
             //Sending email
-           Transport.send(mm);
+           Transport.send(msg);
 
 
         } catch (MessagingException e) {

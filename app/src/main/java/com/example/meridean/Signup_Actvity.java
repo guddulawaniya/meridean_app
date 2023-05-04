@@ -186,13 +186,13 @@ public class Signup_Actvity extends AppCompatActivity {
     void RegistrationAPI(String name, String email, String mobile, String pass) {
 
         String sendotp = new DecimalFormat("0000").format(new Random().nextInt(9999));
+            final String message = "Hello ! The One Time Password to login for Staff panel is " + sendotp + " This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd";
 
-        final String message = "Hello ! The One Time Password to login for Staff panel is " + sendotp + " This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd";
-        String registrationURL = BASE_URL + "?name=" + name + "&email=" + email + "&phone=" + mobile + "&password=" + pass;
-        String sendotpurl = "https://api.datagenit.com/sms?auth=D!~7113Zz8MHFw1mQ&senderid=MOECOE&msisdn=" + mobile + "&message=" + message;
+            String registrationURL = BASE_URL + "?name=" + name + "&email=" + email + "&phone=" + mobile + "&password=" + pass;
+            String sendotpurl = "https://api.datagenit.com/sms?auth=D!~7113Zz8MHFw1mQ&senderid=MOECOE&msisdn=" + mobile + "&message=" + message;
 
 
-        class registration extends AsyncTask<String, String, String> {
+            class registration extends AsyncTask<String, String, String> {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -210,7 +210,7 @@ public class Signup_Actvity extends AppCompatActivity {
                         sendotpnumbers sm = new sendotpnumbers(getApplicationContext());
                         sm.execute(sendotpurl);
 
-                        sendemailotp se = new sendemailotp(getApplicationContext(),email,message);
+                        sendemailotp se = new sendemailotp(getApplicationContext(),email,sendotp);
                         se.execute();
 
 
