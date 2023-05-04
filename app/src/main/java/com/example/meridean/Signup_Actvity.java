@@ -207,8 +207,8 @@ public class Signup_Actvity extends AppCompatActivity {
                     if (status == 0) {
 
 
-//                        sendotpnumbers sm = new sendotpnumbers(getApplicationContext());
-//                        sm.execute(sendotpurl);
+                        sendotpnumbers sm = new sendotpnumbers(getApplicationContext());
+                        sm.execute(sendotpurl);
 
                         sendemailotp se = new sendemailotp(getApplicationContext(),email,message);
                         se.execute();
@@ -275,9 +275,6 @@ public class Signup_Actvity extends AppCompatActivity {
 
 
     // send registration  data on server
-
-
-
 
 
     void ontextwatchError()

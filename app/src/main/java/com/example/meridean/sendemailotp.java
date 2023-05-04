@@ -1,6 +1,5 @@
 package com.example.meridean;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -24,7 +23,6 @@ public class sendemailotp extends AsyncTask<String, String, String> {
     private String email;
 
     private String message;
-    private ProgressDialog progressDialog;
 
     public sendemailotp(Context context,  String email, String message) {
         this.context = context;
@@ -37,11 +35,14 @@ public class sendemailotp extends AsyncTask<String, String, String> {
 
         super.onPreExecute();
 
+       // progressDialog = ProgressDialog.show(context,"Sending message","Please wait...",false,false);
+
         Toast.makeText(context, "please wait email sending..", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPostExecute(String s) {
+
 
         //Showing a success message
         Toast.makeText(context,"Message Sent",Toast.LENGTH_LONG).show();
@@ -56,7 +57,7 @@ public class sendemailotp extends AsyncTask<String, String, String> {
 
         //Configuring properties for gmail
         //If you are not using gmail you may need to change the values
-        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.host", "smtp.hostinger.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
