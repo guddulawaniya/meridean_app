@@ -79,9 +79,9 @@ public class sendemailotp extends AsyncTask<String, String, String> {
             //Adding receiver
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             //Adding subject
-            String messages = "<div style=color:black;>Hello ! The One Time Password to login for Staff panel is</div><div style=color:red;>"+sendotp+"</div><div style=color:black;> This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd</div> ";
+            String messages = "<div style=color:black;><h4>Hello ! The One Time Password to login for Staff panel is</h4></div><div style=color:red;><h4>"+sendotp+"</h4></div><div style=color:black;> This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd</div> ";
 
-
+            Multipart mp = new MimeMultipart();
             msg.setSubject("Verification Email");
             //Setting sender address
             msg.setFrom(new InternetAddress(config.EMAIL));
@@ -89,10 +89,11 @@ public class sendemailotp extends AsyncTask<String, String, String> {
 
             MimeBodyPart htmlPart = new MimeBodyPart();
             //Adding message
+
             htmlPart.setContent(messages, "text/html");
 
-            Multipart mp = new MimeMultipart();
             mp.addBodyPart(htmlPart);
+
 
             msg.setContent(mp);
 
@@ -107,5 +108,6 @@ public class sendemailotp extends AsyncTask<String, String, String> {
 
 
     }
+
 
 }
