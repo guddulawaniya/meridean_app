@@ -1,12 +1,8 @@
 package com.example.meridean;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -23,12 +19,13 @@ public class Splash_screen extends AppCompatActivity {
 
         Animation ani = AnimationUtils.loadAnimation(this,R.anim.imageanimation);
         image.startAnimation(ani);
+        InternetConnection nt = new InternetConnection(getApplicationContext());
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                if (isConnected())
+                if (nt.isConnected())
                 {
                     startActivity(new Intent(Splash_screen.this,MainActivity.class));
 
@@ -49,17 +46,5 @@ public class Splash_screen extends AppCompatActivity {
 
 
 
-    }
-    public boolean isConnected() {
-        boolean connected = false;
-        try {
-            ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo nInfo = cm.getActiveNetworkInfo();
-            connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
-            return connected;
-        } catch (Exception e) {
-            Log.e("Connectivity Exception", e.getMessage());
-        }
-        return connected;
     }
 }

@@ -1,27 +1,20 @@
 package com.example.meridean;
 
-import android.app.Notification;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.chaos.view.PinView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
@@ -31,12 +24,13 @@ import java.util.Random;
 public class verify_OTP_Activity extends AppCompatActivity {
 
     PinView pinView;
-    private NotificationManagerCompat notificationManagerCompat;
-    private Notification notification;
-
     TextView resendotp;
 
     String sendotp;
+    final String sms = "Hello ! The One Time Password " +
+            "to login for Staff panel is "+sendotp+" This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd";
+
+    String url = "https://api.datagenit.com/sms?auth=D!~7113Zz8MHFw1mQ&senderid=MOECOE&msisdn=";
     boolean rdcheck = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +45,7 @@ public class verify_OTP_Activity extends AppCompatActivity {
         sendotp = intent.getStringExtra("otp");
         resendotp = findViewById(R.id.resendotp);
 
+        InternetConnection nt = new InternetConnection(getApplicationContext());
         timecounter();
         resendotp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +55,10 @@ public class verify_OTP_Activity extends AppCompatActivity {
                 {
                     rdcheck=false;
                     sendotp= new DecimalFormat("0000").format(new Random().nextInt(9999));
+                    String s = url + number + "&message=" + sms;
                     timecounter();
-                    sendotpnumbers(number,sendotp);
+                    sendotpnumbers sm = new sendotpnumbers(getApplication());
+                    sm.execute(s);
 
                 }
 
@@ -80,7 +77,7 @@ public class verify_OTP_Activity extends AppCompatActivity {
 
                 String enterotpinboxs=pinView.getText().toString();
 
-                if (sendotp.equals(enterotpinboxs))
+                if (sendotp.equals(enterotpinboxs) && nt.isConnected())
                 {
 
 
@@ -88,15 +85,30 @@ public class verify_OTP_Activity extends AppCompatActivity {
                     startActivity(new Intent(verify_OTP_Activity.this, userProfile_Activity.class));
                     overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
                     finish();
-                }
+                } else if (!nt.isConnected()) {
+                    startActivity(new Intent(verify_OTP_Activity.this,offline_Activity.class));
 
-                else {
-                    Toast.makeText(verify_OTP_Activity.this, "Please Enter the valid OTP ", Toast.LENGTH_SHORT).show();
+                    overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
+                    finish();
+
+                } else {
+                    pinView.startAnimation(AnimationUtils.loadAnimation(getApplication(),R.anim.shake_text));
+                    pinView.setLineColor(Color.RED);
+                    Toast toast=   Toast.makeText(verify_OTP_Activity.this, "Please Enter the valid OTP ", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            toast.cancel();
+
+                        }
+                    },1000);
+
                 }
 
             }
         });
-
 
 
 
@@ -137,75 +149,6 @@ public class verify_OTP_Activity extends AppCompatActivity {
         overridePendingTransition(R.anim.left_in,R.anim.right_out);
         super.onBackPressed();
     }
-
-    void sendotpnumbers(String mobile, String sendotp) {
-
-        final String sms = "Hello ! The One Time Password " +
-                "to login for Staff panel is "+sendotp+" This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd";
-
-        String addurlsignup = "https://api.datagenit.com/sms?auth=D!~7113Zz8MHFw1mQ&senderid=MOECOE&msisdn="+mobile+"&message="+sms;
-
-
-        class sendotp extends AsyncTask<String, String, String> {
-            @Override
-            protected void onPostExecute(String s) {
-
-                try {
-                    JSONObject obj = new JSONObject(s);
-                    int status = obj.getInt("code");
-                    if (status==100)
-                    {
-
-                        Toast.makeText(verify_OTP_Activity.this, " Again Please check your inbox", Toast.LENGTH_SHORT).show();
-
-                    }
-                    else
-                    {
-                        Toast.makeText(verify_OTP_Activity.this, "Unable to retrive any data on server", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
-
-                super.onPostExecute(s);
-            }
-
-            @Override
-            protected String doInBackground(String... param) {
-
-
-                try {
-                    URL url = new URL(param[0]);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    return br.readLine();
-                } catch (Exception ex) {
-                    return ex.getMessage();
-                }
-
-            }
-        }
-        sendotp obj = new sendotp();
-        obj.execute(addurlsignup);
-
-    }
-
-//    void generatenotification(String otp)
-//    {
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-//            NotificationChannel channel = new NotificationChannel("mych","My Channel", NotificationManager.IMPORTANCE_DEFAULT);
-//            NotificationManager manager = getSystemService(NotificationManager.class);
-//            manager.createNotificationChannel(channel);
-//        }
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"mych")
-//                .setSmallIcon(R.drawable.logo_symbol_colour)
-//                .setContentTitle("Meridean OTP Verify")
-//                .setContentText("One Time Password : "+otp);
-//        notification = builder.build();
-//        notificationManagerCompat = NotificationManagerCompat.from(this);
-//        notificationManagerCompat.notify(1,notification);
-//    }
 
 
 }

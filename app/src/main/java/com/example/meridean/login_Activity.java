@@ -3,12 +3,9 @@ package com.example.meridean;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -70,6 +67,7 @@ public class login_Activity extends AppCompatActivity {
         password = sharedPreferences.getString(PASSWORD_KEY,null);
 
         textwatherError();
+        InternetConnection nt = new InternetConnection(getApplicationContext());
 
 
 
@@ -79,12 +77,12 @@ public class login_Activity extends AppCompatActivity {
                 String emailtext = emailidlg.getText().toString().trim();
                 String passtext = passwordlg.getText().toString().trim();
 
-                if (!emailtext.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailtext).matches() && !(passtext.isEmpty()) && (passtext.length() <= 16) && isConnected() ) {
+                if (!emailtext.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailtext).matches() && !(passtext.isEmpty()) && (passtext.length() <= 16) && nt.isConnected() ) {
 
                         logincode(emailtext, passtext);
 
                 }
-                else if(!isConnected())
+                else if(!nt.isConnected())
                 {
                     Intent intent = new Intent(login_Activity.this, offline_Activity.class);
                     startActivity(intent);
@@ -216,19 +214,6 @@ public class login_Activity extends AppCompatActivity {
             finish();
         }
         super.onStart();
-    }
-
-    public boolean isConnected() {
-        boolean connected = false;
-        try {
-            ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo nInfo = cm.getActiveNetworkInfo();
-            connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
-            return connected;
-        } catch (Exception e) {
-            Log.e("Connectivity Exception", e.getMessage());
-        }
-        return connected;
     }
 
 
