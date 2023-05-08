@@ -2,8 +2,11 @@ package com.example.meridean;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -68,6 +72,7 @@ public class Signup_Actvity extends AppCompatActivity {
         emaillayout = findViewById(R.id.emaillayoutsp);
         passlayout = findViewById(R.id.passlayoutsp);
         mobilenumberlayout = findViewById(R.id.mobilenumberlayout);
+
 
 
         //local find by ids
@@ -181,6 +186,29 @@ public class Signup_Actvity extends AppCompatActivity {
             }
         });
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent  data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK)
+        {
+
+            try {
+                Uri imageUri = data.getData();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        sendemailotp se = new sendemailotp(getApplicationContext(),"it3@meridean.org","0388");
+        se.execute();
     }
 
     void RegistrationAPI(String name, String email, String mobile, String pass) {
