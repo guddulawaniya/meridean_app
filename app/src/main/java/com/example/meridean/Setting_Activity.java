@@ -70,6 +70,8 @@ public class Setting_Activity extends AppCompatActivity {
                     currentlayout.setError("");
                     newlayout.setError("");
                     confirmlayout.setError("");
+                    changepasswordlinear.setVisibility(View.GONE);
+
                 }
                 else if (currentpasstext.getText().toString().isEmpty())
                 {

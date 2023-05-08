@@ -2,10 +2,8 @@ package com.example.meridean;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.Date;
 import java.util.Properties;
 
@@ -81,28 +79,20 @@ public class sendemailotp extends AsyncTask<String, String, String> {
             //Adding subject
             String messages = "<div style=color:black;><h4>Hello ! The One Time Password to login for Staff panel is</h4></div><div style=color:red;><h4>" + sendotp + "</h4></div><div style=color:black;> This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd</div> ";
 
-            messages+="<img src=https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&w=1600 width=500px/>";
-            messages+="Email : <a href=https://mail.google.com/mail/u/0/#inbox?compose=new target=_blank>hr@meridean.org</a>";
+            messages+="<img src=https://www.meridean.org/frontend/images/about/our-team.webp width=200px/><br>";
+            messages+="Email : <a href=https://mail.google.com/mail/u/0/#inbox?compose=new target=_blank>hr@meridean.org</a><br>";
             messages+="Text file : <a href=https://drive.google.com/file/d/1ckbOISSVDeBCaz652JiWVszR2_WE99pC/view?usp=share_link>Open click</a>";
+            messages+="<a href=https://drive.google.com/file/d/1ckbOISSVDeBCaz652JiWVszR2_WE99pC/view?usp=share_link></a>";
             Multipart mp = new MimeMultipart();
             msg.setSubject("Verification Email");
             //Setting sender address
             msg.setFrom(new InternetAddress(config.EMAIL));
             msg.setSentDate(new Date());
 
-
-            File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
             // Storing the data in file with name as geeksData.txt
 
 
             MimeBodyPart htmlPart = new MimeBodyPart();
-            MimeBodyPart fileattech = new MimeBodyPart();
-
-//            DataSource source = new FileDataSource("");
-//            fileattech.setDataHandler(new DataHandler(source));
-//            fileattech.setFileName("meridean logo");
-//            //Adding message
 
             htmlPart.setContent(messages, "text/html");
 

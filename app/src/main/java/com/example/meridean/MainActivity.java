@@ -21,8 +21,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.common.data.SingleRefDataBufferIterator;
-
 import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
@@ -167,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
             // When the user click yes button then app will close
             finish();
-            onBackPressed();
         });
         builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
             // If user click no then dialog box is canceled.
