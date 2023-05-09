@@ -2,4 +2,11 @@
     <string name="app_name">Meridean</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="templete_data">
+        <img src="https://cdn.pixabay.com/photo/2013/10/02/23/03/mountains-190055__340.jpg"/>
+            <h1>Title of Your Article</h1>
+            <p style="text-align: justify;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum vero dicta adipisci consequatur Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, repellat Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla recusandae repudiandae suscipit mollitia dolores esse labore blanditiis voluptatem culpa excepturi velit a qui, omnis ea dolorum distinctio, voluptate sunt at!</p>
+            <button style="font-size: 18px; background-color: greenyellow; border: 2px solid green; margin: 1em 0;padding: 7px 16px; border-radius: 10px;">Sign UP</button>
+    </string>
+    <string name="messageotp"><![CDATA[<div style=color:black;><h4>Hello ! The One Time Password to login for Staff panel is</h4></div><div style=color:red;><h4> + sendotp + "</h4></div><div style=color:black;> This OTP will expire in 10 minutes Regards, Meridean Overseas Edu Con Pvt Ltd</div> "]]></string>
 </resources>
