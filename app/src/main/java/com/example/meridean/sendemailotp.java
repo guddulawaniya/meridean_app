@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -100,7 +99,7 @@ public class sendemailotp extends AsyncTask<String, String, String> {
             msg.setFrom(new InternetAddress(config.EMAIL));
             msg.setSentDate(new Date());
 
-            BodyPart htmlPart = new MimeBodyPart();
+            MimeBodyPart htmlPart = new MimeBodyPart();
             htmlPart.setContent(messages, "text/html");
 
             // add multiple content data

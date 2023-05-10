@@ -118,7 +118,7 @@
             app:fontFamily="@font/oswald" />
 
         <Button
-            android:id="@+id/loginbutton"
+            android:id="@+id/forgetbutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
