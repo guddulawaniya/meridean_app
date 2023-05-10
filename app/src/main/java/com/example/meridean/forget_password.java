@@ -1,6 +1,10 @@
 package com.example.meridean;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -20,15 +24,41 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONObject;
 
 public class forget_password extends AppCompatActivity {
-    String forgetpassworURL = "";
+    String forgetpassworURL = "https://demo.merideanoverseas.in/login.php";
+    TextInputLayout forgetemaillayout;
+    TextInputEditText forgetemail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
 
-        TextInputEditText forgetemail = findViewById(R.id.forgetemail);
-        TextInputLayout forgetemaillayout = findViewById(R.id.forgetpasswordlayout);
+        forgetemail = findViewById(R.id.forgetemail);
+        forgetemaillayout = findViewById(R.id.forgetpasswordlayout);
         Button forgetbutton = findViewById(R.id.forgetbutton);
+
+        forgetemail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (Patterns.EMAIL_ADDRESS.matcher(forgetemail.getText().toString()).matches())
+                {
+                    forgetemaillayout.setErrorEnabled(false);
+
+                } else if (forgetemail.getText().toString().length() > 0) {
+                    forgetemaillayout.setError("Invalid Email Address");
+                    forgetemail.requestFocus();
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         InternetConnection nt = new InternetConnection(getApplicationContext());
         forgetbutton.setOnClickListener(new View.OnClickListener() {
@@ -71,13 +101,24 @@ public class forget_password extends AppCompatActivity {
 
                 try {
                     JSONObject obj = new JSONObject(response);
-                    String email = obj.getString("email");
                     String status = obj.getString("status");
 
-                    if (status.equals("True"))
+                    if (status.equals(true))
                     {
                         Toast.makeText(forget_password.this, "Link successfully send on mail", Toast.LENGTH_SHORT).show();
 
+                    }
+                    else
+                    {
+
+
+                        forgetemaillayout.setBoxStrokeColor(Color.RED);
+                        forgetemaillayout.setError("NO Record");
+                        forgetemaillayout.setHintTextColor(ColorStateList.valueOf(Color.RED));
+                        forgetemaillayout.startAnimation(AnimationUtils.loadAnimation(getApplication(),R.anim.shake_text));
+                        forgetemail.setText("");
+                        forgetemail.requestFocus();
+                        Toast.makeText(forget_password.this, "NO Records", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -94,7 +135,6 @@ public class forget_password extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error"+error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
-
 
         });
 

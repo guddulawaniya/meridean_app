@@ -184,12 +184,6 @@ public class Signup_Actvity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        sendemailotp se = new sendemailotp(getApplicationContext(),"it3@meridean.org","7887");
-        se.execute();
-    }
 
     void RegistrationAPI(String name, String email, String mobile, String pass) {
 
