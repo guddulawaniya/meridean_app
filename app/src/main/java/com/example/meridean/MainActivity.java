@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         profilemenuimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,userProfile_Activity.class));
+                startActivity(new Intent(MainActivity.this, Profile_Activity.class));
                 overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
                 finish();
             }

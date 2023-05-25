@@ -37,6 +37,7 @@ public class Signup_Actvity extends AppCompatActivity {
 
 
 
+
     //some runtime permissions
     private final int REQ_CODE_PERMISSION_READ_SMS = 122;
 
@@ -216,9 +217,11 @@ public class Signup_Actvity extends AppCompatActivity {
                         se.execute();
 
 
-
                         Intent intent = new Intent(Signup_Actvity.this, verify_OTP_Activity.class);
                         intent.putExtra("number", mobile);
+                        intent.putExtra("name", name);
+                        intent.putExtra("email", email);
+                        intent.putExtra("pass", pass);
                         intent.putExtra("otp", sendotp);
 
                         startActivity(intent);

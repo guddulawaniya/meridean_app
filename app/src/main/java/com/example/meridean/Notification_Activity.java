@@ -15,7 +15,7 @@ public class Notification_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(Notification_Activity.this, userProfile_Activity.class));
+        startActivity(new Intent(Notification_Activity.this, Profile_Activity.class));
         overridePendingTransition(R.anim.left_in,R.anim.right_out);
         finish();
         super.onBackPressed();

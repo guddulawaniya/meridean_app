@@ -106,7 +106,7 @@ public class Setting_Activity extends AppCompatActivity {
         backbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               startActivity(new Intent(Setting_Activity.this, userProfile_Activity.class));
+               startActivity(new Intent(Setting_Activity.this, Profile_Activity.class));
                 overridePendingTransition(R.anim.left_in,R.anim.right_out);
                 finish();
             }
@@ -129,7 +129,7 @@ public class Setting_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(Setting_Activity.this, userProfile_Activity.class));
+        startActivity(new Intent(Setting_Activity.this, Profile_Activity.class));
         overridePendingTransition(R.anim.left_in,R.anim.right_out);
         finish();
         super.onBackPressed();

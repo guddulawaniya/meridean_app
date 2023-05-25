@@ -37,7 +37,7 @@ public class login_Activity extends AppCompatActivity {
     static final String EMAIL_KEY = "email_key";
     static  final String PASSWORD_KEY = "password_key";
 
-    String email,password;
+    String email,password,name;
     TextView errorshowtext;
 
 
@@ -65,6 +65,7 @@ public class login_Activity extends AppCompatActivity {
 
         email = sharedPreferences.getString(EMAIL_KEY,null);
         password = sharedPreferences.getString(PASSWORD_KEY,null);
+        name = sharedPreferences.getString("your_name",null);
 
         textwatherError();
         InternetConnection nt = new InternetConnection(getApplicationContext());
@@ -210,7 +211,7 @@ public class login_Activity extends AppCompatActivity {
         if (email!=null && password!=null)
         {
             startActivity(new Intent(login_Activity.this, MainActivity.class));
-            Toast.makeText(this, "Welcome Back "+email, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Welcome Back "+name, Toast.LENGTH_LONG).show();
             finish();
         }
         super.onStart();
@@ -240,7 +241,7 @@ public class login_Activity extends AppCompatActivity {
                         editor.putString(PASSWORD_KEY,passwordtext);
                         editor.commit();
 
-                        Intent intent = new Intent(getApplicationContext(), userProfile_Activity.class);
+                        Intent intent = new Intent(getApplicationContext(), Profile_Activity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
                         finish();

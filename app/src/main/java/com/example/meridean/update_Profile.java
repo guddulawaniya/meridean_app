@@ -3,7 +3,6 @@ package com.example.meridean;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.meridean.databinding.FragmentEditProfileBinding;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,10 +25,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Edit_profile_Fragment extends DialogFragment {
+public class update_Profile extends DialogFragment {
 
     FragmentEditProfileBinding binding;
     static final String SHARE_PREFE = "share_pre";
@@ -95,9 +92,7 @@ public class Edit_profile_Fragment extends DialogFragment {
         binding.updatedob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-
-                        getContext(),
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,
@@ -161,7 +156,10 @@ public class Edit_profile_Fragment extends DialogFragment {
 
                 }
 
-               else Toast.makeText(getContext(), "Please Checked Box", Toast.LENGTH_SHORT).show();
+               else {
+                   Toast.makeText(getContext(), "Please fill the values ", Toast.LENGTH_SHORT).show();
+
+                }
 
 
 

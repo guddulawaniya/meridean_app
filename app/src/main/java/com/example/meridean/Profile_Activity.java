@@ -1,11 +1,14 @@
 package com.example.meridean;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,18 +17,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class userProfile_Activity extends AppCompatActivity {
+public class Profile_Activity extends AppCompatActivity {
 
     int SELECT_IMAGE = 200;
     ImageView profile_image;
     SharedPreferences sharedPreferences;
-    static final String SHARE_PREFE = "share_pre";
+    static final String SHARE_PREFE = "share_prefs";
 
     static final String YOUR_NAME = "your_name";
-    static final String EMAIL_ID = "email_id";
+    static final String EMAIL_ID = "email_key";
     static final String DOB = "dob";
     static final String GENDER = "gender";
     static final String CONTAXT_NO = "contactnumber";
@@ -41,7 +45,7 @@ public class userProfile_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        DialogFragment dialogFragment = new Edit_profile_Fragment();
+        DialogFragment dialogFragment = new update_Profile();
 
 
         sharedPreferences = getSharedPreferences(SHARE_PREFE,MODE_PRIVATE);
@@ -78,10 +82,41 @@ public class userProfile_Activity extends AppCompatActivity {
         },0,2000);
 
 
+        Calendar calendar = Calendar.getInstance();
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        dob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Profile_Activity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                               SharedPreferences.Editor editor = getSharedPreferences(SHARE_PREFE,MODE_PRIVATE).edit();
+                               editor.putString("dob",dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                               editor.commit();
+                               editor.apply();
+
+                            }
+                        },year, month, day);
+
+
+                datePickerDialog.show();
+            }
+        });
+
         paymentcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(userProfile_Activity.this,Payment_Activity.class));
+                startActivity(new Intent(Profile_Activity.this,Payment_Activity.class));
                 overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
             }
         });
@@ -89,7 +124,7 @@ public class userProfile_Activity extends AppCompatActivity {
         notificationcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(userProfile_Activity.this,Notification_Activity.class));
+                startActivity(new Intent(Profile_Activity.this,Notification_Activity.class));
                 overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
 
             }
@@ -97,7 +132,7 @@ public class userProfile_Activity extends AppCompatActivity {
         settingcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(userProfile_Activity.this,Setting_Activity.class));
+                startActivity(new Intent(Profile_Activity.this,Setting_Activity.class));
                 overridePendingTransition(R.anim.right_in_activity,R.anim.left_out_activity);
                 finish();
             }
@@ -176,7 +211,7 @@ public class userProfile_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(userProfile_Activity.this,MainActivity.class));
+        startActivity(new Intent(Profile_Activity.this,MainActivity.class));
         overridePendingTransition(R.anim.left_in,R.anim.right_out);
         finish();
     }
